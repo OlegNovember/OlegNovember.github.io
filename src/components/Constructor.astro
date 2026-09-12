@@ -1,0 +1,522 @@
+---
+const blocks = [
+    { id: 'hero', label: 'Hero', always: true },
+    { id: 'about', label: 'О себе', always: true },
+    { id: 'services', label: 'Услуги' },
+    { id: 'portfolio', label: 'Портфолио' },
+    { id: 'reviews', label: 'Отзывы' },
+    { id: 'pricing', label: 'Тарифы' },
+    { id: 'gallery', label: 'Галерея' },
+    { id: 'faq', label: 'FAQ' },
+    { id: 'form', label: 'Форма заявки', always: true },
+    { id: 'contacts', label: 'Контакты' }
+];
+
+const themes = [
+    { id: 'dark', label: 'Тёмная', color: '#0f1420', card: '#1a2332', accent: '#3b82f6', text: '#e6edf3', muted: '#8a9aa8' },
+    { id: 'light', label: 'Светлая', color: '#f7f9fc', card: '#ffffff', accent: '#2b6cb0', text: '#1a2332', muted: '#7d8fa3' },
+    { id: 'luxury', label: 'Люкс', color: '#0a0a0a', card: '#141210', accent: '#c9a961', text: '#e8e2d5', muted: '#8a857c' },
+    { id: 'female', label: 'Пастель', color: '#fdf6f3', card: '#ffffff', accent: '#d98b8b', text: '#3a2a35', muted: '#a893a0' },
+    { id: 'neon', label: 'Неон', color: '#0d0a1f', card: '#1a1030', accent: '#a855f7', text: '#e9d5ff', muted: '#8b7aa8' }
+];
+---
+
+<section id="constructor" class="section section-dark constructor-section">
+    <div class="container">
+        <div class="section-label reveal">Конструктор</div>
+        <h2 class="section-title reveal d-1">Собери свой <em>лендинг</em></h2>
+        <p class="section-sub reveal d-2">Отметь блоки, выбери стиль — увидишь макет и цену в реальном времени</p>
+
+        <div class="constructor reveal d-3">
+            <!-- ПАНЕЛЬ НАСТРОЕК -->
+            <div class="controls">
+                <div class="control-group">
+                    <div class="control-title">
+                        <span>Блоки</span>
+                        <span class="control-hint">Hero, О себе, Форма — всегда включены</span>
+                    </div>
+                    <div class="blocks-grid">
+                        {blocks.map(b => (
+                            <label class={`block-toggle ${b.always ? 'always' : ''}`}>
+                                <input 
+                                    type="checkbox" 
+                                    data-block={b.id} 
+                                    checked={b.always} 
+                                    disabled={b.always} 
+                                />
+                                <span class="block-check"></span>
+                                <span class="block-label">{b.label}</span>
+                                {b.always && <span class="block-tag">включён</span>}
+                            </label>
+                        ))}
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <div class="control-title"><span>Цветовая схема</span></div>
+                    <div class="themes-grid">
+                        {themes.map((t, i) => (
+                            <button 
+                                type="button" 
+                                class={`theme-btn ${i === 0 ? 'active' : ''}`} 
+                                data-theme={t.id}
+                                data-color={t.color}
+                                data-card={t.card}
+                                data-accent={t.accent}
+                                data-text={t.text}
+                                data-muted={t.muted}
+                            >
+                                <span class="theme-swatch" style={`background: ${t.color}; border-color: ${t.accent}`}>
+                                    <span class="theme-dot" style={`background: ${t.accent}`}></span>
+                                </span>
+                                <span class="theme-label">{t.label}</span>
+                            </button>
+                        ))}
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <div class="control-title"><span>Дополнительно</span></div>
+                    <label class="extra-toggle">
+                        <input type="checkbox" id="extraHosting" />
+                        <span class="block-check"></span>
+                        <span class="extra-content">
+                            <span class="extra-title">Домен + хостинг + SSL на год</span>
+                            <span class="extra-price">+1 000 ₽</span>
+                        </span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- ПРЕВЬЮ -->
+            <div class="preview">
+                <div class="preview-browser">
+                    <div class="preview-bar">
+                        <div class="preview-dots"><span></span><span></span><span></span></div>
+                        <div class="preview-url">your-site.ru</div>
+                    </div>
+                    <div class="preview-body" id="previewBody"></div>
+                </div>
+                <div class="preview-info">
+                    <span class="preview-info-item">📱 Адаптив</span>
+                    <span class="preview-info-item">⚡ Быстрый</span>
+                    <span class="preview-info-item">🎨 Твой стиль</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ИТОГ -->
+        <div class="totals reveal d-4">
+            <div class="totals-left">
+                <div class="total-label">Итоговая стоимость</div>
+                <div class="total-price"><span id="totalPrice">5 000</span> ₽</div>
+                <div class="total-note" id="totalNote">Базовая комплектация</div>
+            </div>
+            <a href="#form" class="btn btn-primary" id="orderBtn">
+                <span>Заказать такой лендинг</span>
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+        </div>
+    </div>
+</section>
+
+<style>
+    .constructor-section { position: relative; overflow: hidden; }
+    .constructor-section::before {
+        content: "";
+        position: absolute;
+        top: 20%; right: -20%;
+        width: 800px; height: 800px;
+        background: radial-gradient(circle, rgba(139,92,246,0.08), transparent 70%);
+        pointer-events: none;
+    }
+    .constructor {
+        display: grid;
+        grid-template-columns: 1fr 1.1fr;
+        gap: 48px;
+        align-items: start;
+        position: relative;
+    }
+
+    /* КОНТРОЛЫ */
+    .controls { display: flex; flex-direction: column; gap: 36px; }
+    .control-title {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        margin-bottom: 18px;
+    }
+    .control-title > span:first-child {
+        font-size: 13px; font-weight: 700;
+        text-transform: uppercase; letter-spacing: 2px; color: #fff;
+    }
+    .control-hint { font-size: 12px; color: #6a7a8a; font-weight: 400; text-transform: none; letter-spacing: 0; }
+    .blocks-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .block-toggle {
+        display: flex; align-items: center; gap: 10px;
+        padding: 12px 14px;
+        background: rgba(255,255,255,0.03);
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 10px;
+        cursor: pointer; transition: all 0.25s;
+        font-size: 14px; color: #c8d4e0;
+        user-select: none; position: relative;
+    }
+    .block-toggle:hover { border-color: rgba(59,130,246,0.4); background: rgba(59,130,246,0.05); }
+    .block-toggle input { position: absolute; opacity: 0; pointer-events: none; }
+    .block-toggle:has(input:checked) { border-color: rgba(59,130,246,0.6); background: rgba(59,130,246,0.1); color: #fff; }
+    .block-toggle.always { opacity: 0.7; cursor: not-allowed; }
+    .block-toggle.always:has(input:checked) { opacity: 1; }
+    .block-check {
+        width: 18px; height: 18px;
+        border: 2px solid rgba(255,255,255,0.2);
+        border-radius: 5px; flex-shrink: 0;
+        position: relative; transition: all 0.25s;
+    }
+    .block-toggle:has(input:checked) .block-check,
+    .extra-toggle:has(input:checked) .block-check {
+        background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+        border-color: transparent;
+    }
+    .block-toggle:has(input:checked) .block-check::after,
+    .extra-toggle:has(input:checked) .block-check::after {
+        content: ""; position: absolute; left: 5px; top: 1px;
+        width: 5px; height: 10px;
+        border: solid #fff; border-width: 0 2px 2px 0;
+        transform: rotate(45deg);
+    }
+    .block-tag {
+        font-size: 10px; padding: 2px 6px;
+        background: rgba(34,197,94,0.15); color: #22c55e;
+        border-radius: 4px; text-transform: uppercase;
+        letter-spacing: 0.5px; margin-left: auto;
+    }
+
+    .themes-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
+    .theme-btn {
+        background: transparent; border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 12px; padding: 12px 6px; cursor: pointer;
+        transition: all 0.25s; display: flex; flex-direction: column;
+        align-items: center; gap: 8px; font-family: inherit;
+    }
+    .theme-btn:hover { border-color: rgba(255,255,255,0.2); transform: translateY(-2px); }
+    .theme-btn.active {
+        border-color: #3b82f6; background: rgba(59,130,246,0.08);
+        box-shadow: 0 0 0 2px rgba(59,130,246,0.2);
+    }
+    .theme-swatch {
+        width: 34px; height: 34px; border-radius: 50%;
+        border: 2px solid;
+        display: flex; align-items: center; justify-content: center;
+    }
+    .theme-dot { width: 14px; height: 14px; border-radius: 50%; }
+    .theme-label { font-size: 11px; color: #8a9aa8; font-weight: 500; }
+    .theme-btn.active .theme-label { color: #fff; }
+
+    .extra-toggle {
+        display: flex; align-items: center; gap: 12px;
+        padding: 14px 16px;
+        background: rgba(255,255,255,0.03);
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 12px;
+        cursor: pointer; transition: all 0.25s; user-select: none;
+    }
+    .extra-toggle:hover { border-color: rgba(59,130,246,0.4); background: rgba(59,130,246,0.05); }
+    .extra-toggle:has(input:checked) { border-color: rgba(59,130,246,0.6); background: rgba(59,130,246,0.1); }
+    .extra-toggle input { position: absolute; opacity: 0; pointer-events: none; }
+    .extra-content { display: flex; align-items: center; justify-content: space-between; flex: 1; }
+    .extra-title { color: #c8d4e0; font-size: 14px; font-weight: 500; }
+    .extra-toggle:has(input:checked) .extra-title { color: #fff; }
+    .extra-price { font-size: 13px; color: #3b82f6; font-weight: 700; }
+
+    /* ПРЕВЬЮ */
+    .preview {
+        position: sticky; top: 100px;
+        display: flex; flex-direction: column; gap: 16px;
+    }
+    .preview-browser {
+        border-radius: 16px; overflow: hidden;
+        border: 1px solid rgba(255,255,255,0.1);
+        box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+        background: #0a0e14;
+    }
+    .preview-bar {
+        padding: 10px 16px;
+        background: rgba(255,255,255,0.03);
+        border-bottom: 1px solid rgba(255,255,255,0.08);
+        display: flex; align-items: center; gap: 14px;
+    }
+    .preview-dots { display: flex; gap: 6px; }
+    .preview-dots span { width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,0.15); }
+    .preview-dots span:nth-child(1) { background: #ff5f57; }
+    .preview-dots span:nth-child(2) { background: #febc2e; }
+    .preview-dots span:nth-child(3) { background: #28c840; }
+    .preview-url { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #6a7a8a; }
+
+    .preview-body {
+        height: 520px;
+        overflow-y: auto;
+        transition: background 0.4s;
+    }
+    .preview-body::-webkit-scrollbar { width: 4px; }
+    .preview-body::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 2px; }
+
+    .preview-info { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    .preview-info-item { font-size: 12px; color: #6a7a8a; }
+
+    /* ИТОГ */
+    .totals {
+        margin-top: 56px;
+        display: flex; align-items: center; justify-content: space-between;
+        gap: 32px; padding: 32px 40px;
+        background: linear-gradient(135deg, rgba(59,130,246,0.08), rgba(139,92,246,0.08));
+        border: 1px solid rgba(59,130,246,0.25);
+        border-radius: 24px; flex-wrap: wrap;
+    }
+    .totals-left { display: flex; flex-direction: column; gap: 6px; }
+    .total-label { font-size: 12px; color: #8a9aa8; text-transform: uppercase; letter-spacing: 2px; }
+    .total-price { font-size: 44px; font-weight: 900; color: #fff; line-height: 1; letter-spacing: -2px; }
+    .total-price span {
+        background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+        -webkit-background-clip: text; background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    .total-note { font-size: 13px; color: #6a7a8a; }
+
+    @media (max-width: 1024px) {
+        .constructor { grid-template-columns: 1fr; gap: 40px; }
+        .preview { position: static; }
+        .preview-body { height: 420px; }
+    }
+    @media (max-width: 640px) {
+        .blocks-grid { grid-template-columns: 1fr; }
+        .themes-grid { grid-template-columns: repeat(3, 1fr); }
+        .totals { padding: 24px 20px; }
+        .total-price { font-size: 32px; }
+    }
+</style>
+
+<script>
+    const BASE_PRICE = 5000;
+    const HOSTING_PRICE = 1000;
+
+    const blocksData = [
+        { id: 'hero', label: 'Hero', always: true },
+        { id: 'about', label: 'О себе', always: true },
+        { id: 'services', label: 'Услуги' },
+        { id: 'portfolio', label: 'Портфолио' },
+        { id: 'reviews', label: 'Отзывы' },
+        { id: 'pricing', label: 'Тарифы' },
+        { id: 'gallery', label: 'Галерея' },
+        { id: 'faq', label: 'FAQ' },
+        { id: 'form', label: 'Форма заявки', always: true },
+        { id: 'contacts', label: 'Контакты' }
+    ];
+
+    const previewBody = document.getElementById('previewBody');
+    const totalPriceEl = document.getElementById('totalPrice');
+    const totalNoteEl = document.getElementById('totalNote');
+    const hostingCheckbox = document.getElementById('extraHosting') as HTMLInputElement;
+
+    let T = {
+        color: '#0f1420',
+        card: '#1a2332',
+        accent: '#3b82f6',
+        text: '#e6edf3',
+        muted: '#8a9aa8'
+    };
+
+    // ============ БЛОКИ ПРЕВЬЮ ============
+    const blockRenderers = {
+        hero: () => `
+            <div style="padding:40px 28px;background:linear-gradient(135deg,${T.color},${T.card});text-align:center;border-bottom:1px solid ${T.accent}20">
+                <div style="width:70px;height:70px;border-radius:50%;background:linear-gradient(135deg,${T.accent},${T.accent}99);margin:0 auto 16px;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:800;color:#fff;font-family:Inter,sans-serif">И</div>
+                <div style="font-size:22px;font-weight:800;color:${T.text};margin-bottom:8px;font-family:Inter,sans-serif;line-height:1.2">Иван Иванов</div>
+                <div style="font-size:13px;color:${T.muted};margin-bottom:20px;font-family:Inter,sans-serif">Помогаю начать с нуля</div>
+                <div style="display:inline-block;padding:10px 24px;background:${T.accent};color:#fff;border-radius:8px;font-size:13px;font-weight:700;font-family:Inter,sans-serif">Написать в Telegram</div>
+            </div>
+        `,
+        about: () => `
+            <div style="padding:32px 28px;background:${T.card};border-bottom:1px solid ${T.accent}15">
+                <div style="font-size:11px;color:${T.accent};text-transform:uppercase;letter-spacing:2px;font-weight:700;margin-bottom:12px;font-family:Inter,sans-serif">Обо мне</div>
+                <div style="font-size:16px;font-weight:700;color:${T.text};margin-bottom:10px;font-family:Inter,sans-serif">Меня зовут Иван</div>
+                <div style="font-size:13px;color:${T.muted};line-height:1.6;font-family:Inter,sans-serif">3 года в профессии. Начинал с нуля, без связей и бюджета. Сейчас помогаю новичкам пройти путь быстрее.</div>
+            </div>
+        `,
+        services: () => `
+            <div style="padding:32px 28px;background:${T.color};border-bottom:1px solid ${T.accent}15">
+                <div style="font-size:11px;color:${T.accent};text-transform:uppercase;letter-spacing:2px;font-weight:700;margin-bottom:16px;font-family:Inter,sans-serif">Услуги</div>
+                <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
+                    ${['🎯','👥','📚'].map((icon,i) => `
+                        <div style="padding:14px 10px;background:${T.card};border-radius:10px;text-align:center;border:1px solid ${T.accent}20">
+                            <div style="font-size:20px;margin-bottom:8px">${icon}</div>
+                            <div style="font-size:11px;font-weight:700;color:${T.text};font-family:Inter,sans-serif">${['План','Наставник','Обучение'][i]}</div>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+        `,
+        portfolio: () => `
+            <div style="padding:32px 28px;background:${T.card};border-bottom:1px solid ${T.accent}15">
+                <div style="font-size:11px;color:${T.accent};text-transform:uppercase;letter-spacing:2px;font-weight:700;margin-bottom:16px;font-family:Inter,sans-serif">Портфолио</div>
+                <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px">
+                    <div style="aspect-ratio:16/10;background:linear-gradient(135deg,${T.accent}40,${T.accent}15);border-radius:8px;display:flex;align-items:center;justify-content:center;color:${T.text};font-size:11px;font-weight:700;font-family:Inter,sans-serif">Работа 1</div>
+                    <div style="aspect-ratio:16/10;background:linear-gradient(135deg,${T.accent}40,${T.accent}15);border-radius:8px;display:flex;align-items:center;justify-content:center;color:${T.text};font-size:11px;font-weight:700;font-family:Inter,sans-serif">Работа 2</div>
+                </div>
+            </div>
+        `,
+        reviews: () => `
+            <div style="padding:32px 28px;background:${T.color};border-bottom:1px solid ${T.accent}15">
+                <div style="font-size:11px;color:${T.accent};text-transform:uppercase;letter-spacing:2px;font-weight:700;margin-bottom:16px;font-family:Inter,sans-serif">Отзывы</div>
+                <div style="padding:14px;background:${T.card};border-radius:10px;border-left:3px solid ${T.accent}">
+                    <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+                        <div style="width:28px;height:28px;border-radius:50%;background:${T.accent};display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;font-weight:700;font-family:Inter,sans-serif">А</div>
+                        <div>
+                            <div style="font-size:12px;font-weight:700;color:${T.text};font-family:Inter,sans-serif">Анна</div>
+                            <div style="font-size:10px;color:${T.muted};font-family:Inter,sans-serif">Москва · ⭐⭐⭐⭐⭐</div>
+                        </div>
+                    </div>
+                    <div style="font-size:12px;color:${T.muted};line-height:1.5;font-family:Inter,sans-serif;font-style:italic">"Пришла без опыта. Через месяц вышла на первые деньги."</div>
+                </div>
+            </div>
+        `,
+        pricing: () => `
+            <div style="padding:32px 28px;background:${T.card};border-bottom:1px solid ${T.accent}15">
+                <div style="font-size:11px;color:${T.accent};text-transform:uppercase;letter-spacing:2px;font-weight:700;margin-bottom:16px;font-family:Inter,sans-serif">Тарифы</div>
+                <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px">
+                    ${[1,2,3].map(i => `
+                        <div style="padding:12px 8px;background:${T.color};border-radius:8px;text-align:center;border:1px solid ${i===2?T.accent+'60':T.accent+'20'}">
+                            <div style="font-size:9px;color:${T.muted};text-transform:uppercase;letter-spacing:1px;font-family:Inter,sans-serif">${['Старт','Хит','Про'][i-1]}</div>
+                            <div style="font-size:14px;font-weight:800;color:${i===2?T.accent:T.text};margin-top:4px;font-family:Inter,sans-serif">${['3к','6к','12к'][i-1]}</div>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+        `,
+        gallery: () => `
+            <div style="padding:32px 28px;background:${T.color};border-bottom:1px solid ${T.accent}15">
+                <div style="font-size:11px;color:${T.accent};text-transform:uppercase;letter-spacing:2px;font-weight:700;margin-bottom:16px;font-family:Inter,sans-serif">Галерея</div>
+                <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px">
+                    ${[1,2,3,4,5,6].map(i => `
+                        <div style="aspect-ratio:1;background:linear-gradient(135deg,${T.accent}30,${T.accent}10);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:16px">📷</div>
+                    `).join('')}
+                </div>
+            </div>
+        `,
+        faq: () => `
+            <div style="padding:32px 28px;background:${T.card};border-bottom:1px solid ${T.accent}15">
+                <div style="font-size:11px;color:${T.accent};text-transform:uppercase;letter-spacing:2px;font-weight:700;margin-bottom:16px;font-family:Inter,sans-serif">FAQ</div>
+                ${['Нужен ли опыт?', 'Сколько времени?', 'Как оплата?'].map(q => `
+                    <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid ${T.accent}15">
+                        <div style="font-size:12px;color:${T.text};font-family:Inter,sans-serif;font-weight:600">${q}</div>
+                        <div style="color:${T.accent};font-size:16px;font-weight:300">+</div>
+                    </div>
+                `).join('')}
+            </div>
+        `,
+        form: () => `
+            <div style="padding:32px 28px;background:linear-gradient(135deg,${T.color},${T.card});border-bottom:1px solid ${T.accent}15">
+                <div style="font-size:11px;color:${T.accent};text-transform:uppercase;letter-spacing:2px;font-weight:700;margin-bottom:16px;font-family:Inter,sans-serif">Заявка</div>
+                <div style="margin-bottom:8px;padding:10px 14px;background:${T.card};border:1px solid ${T.accent}30;border-radius:8px;font-size:12px;color:${T.muted};font-family:Inter,sans-serif">Имя</div>
+                <div style="margin-bottom:12px;padding:10px 14px;background:${T.card};border:1px solid ${T.accent}30;border-radius:8px;font-size:12px;color:${T.muted};font-family:Inter,sans-serif">Telegram</div>
+                <div style="padding:12px;background:${T.accent};color:#fff;border-radius:8px;text-align:center;font-size:12px;font-weight:700;font-family:Inter,sans-serif">Отправить</div>
+            </div>
+        `,
+        contacts: () => `
+            <div style="padding:28px;background:${T.color};text-align:center">
+                <div style="display:inline-flex;align-items:center;gap:8px;padding:10px 20px;background:${T.accent}15;border:1px solid ${T.accent}40;border-radius:50px;font-size:12px;color:${T.accent};font-weight:700;font-family:Inter,sans-serif">
+                    ✈ @your_telegram
+                </div>
+            </div>
+        `
+    };
+
+    function renderPreview() {
+        const checked = Array.from(document.querySelectorAll<HTMLInputElement>('[data-block]'))
+            .filter(cb => cb.checked)
+            .map(cb => cb.dataset.block);
+
+        if (!previewBody) return;
+        previewBody.innerHTML = '';
+        previewBody.style.background = T.color;
+
+        blocksData.forEach(b => {
+            if (checked.includes(b.id) && blockRenderers[b.id]) {
+                const el = document.createElement('div');
+                el.style.animation = 'slideIn 0.4s ease';
+                el.innerHTML = blockRenderers[b.id]();
+                previewBody.appendChild(el);
+            }
+        });
+
+        // стили для анимации вставляем один раз
+        if (!document.getElementById('previewAnimStyles')) {
+            const style = document.createElement('style');
+            style.id = 'previewAnimStyles';
+            style.textContent = '@keyframes slideIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}';
+            document.head.appendChild(style);
+        }
+    }
+
+    function updatePrice() {
+        let total = BASE_PRICE;
+        const notes = ['Базовая комплектация'];
+        if (hostingCheckbox?.checked) {
+            total += HOSTING_PRICE;
+            notes.push('+ домен, хостинг, SSL');
+        }
+        if (totalPriceEl) totalPriceEl.textContent = total.toLocaleString('ru-RU');
+        if (totalNoteEl) totalNoteEl.textContent = notes.join(' · ');
+    }
+
+    // Блоки
+    document.querySelectorAll<HTMLInputElement>('[data-block]').forEach(cb => {
+        cb.addEventListener('change', renderPreview);
+    });
+
+    // Темы
+    document.querySelectorAll<HTMLButtonElement>('.theme-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            T = {
+                color: btn.dataset.color || '#0f1420',
+                card: btn.dataset.card || '#1a2332',
+                accent: btn.dataset.accent || '#3b82f6',
+                text: btn.dataset.text || '#e6edf3',
+                muted: btn.dataset.muted || '#8a9aa8'
+            };
+            renderPreview();
+        });
+    });
+
+    hostingCheckbox?.addEventListener('change', updatePrice);
+
+    renderPreview();
+    updatePrice();
+
+    // Передача данных в форму
+    const orderBtn = document.getElementById('orderBtn');
+    orderBtn?.addEventListener('click', () => {
+        const checked = Array.from(document.querySelectorAll<HTMLInputElement>('[data-block]'))
+            .filter(cb => cb.checked)
+            .map(cb => cb.closest('.block-toggle')?.querySelector('.block-label')?.textContent || '')
+            .filter(Boolean);
+
+        const theme = document.querySelector('.theme-btn.active .theme-label')?.textContent || 'Тёмная';
+        const hosting = hostingCheckbox?.checked ? 'да' : 'нет';
+        const total = totalPriceEl?.textContent || '5 000';
+
+        const messageField = document.getElementById('message') as HTMLTextAreaElement | null;
+        if (messageField) {
+            messageField.value = `Конструктор:\nБлоки: ${checked.join(', ')}\nТема: ${theme}\nДомен+хостинг: ${hosting}\nЦена: ${total} ₽`;
+        }
+
+        const serviceSelect = document.getElementById('service') as HTMLSelectElement | null;
+        if (serviceSelect) {
+            serviceSelect.value = 'Лендинг — 9 000 ₽';
+        }
+    });
+</script>git add .
+git commit -m "Make constructor preview realistic"
+git push
