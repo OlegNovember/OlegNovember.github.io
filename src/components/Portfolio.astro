@@ -1,0 +1,165 @@
+---
+const items = [
+    { url: '/demo/male.html', cat: 'Мужской · Тёмный', title: 'Лендинг для наставника', desc: 'Tilda-анимации, форма заявки, FAQ' },
+    { url: '/demo/female.html', cat: 'Женский · Пастель', title: 'Лендинг для наставницы', desc: 'Мягкие формы, женский круг, отзывы' },
+    { url: '/demo/luxury.html', cat: 'Люкс · Чёрный + золото', title: 'Приватная практика', desc: 'Monogram, ограниченный поток, конфиденциальность' },
+    { url: '/demo/quiz.html', cat: 'Интерактив · Квиз', title: 'Лендинг-квиз', desc: '3 вопроса, результат, форма заявки' },
+    { url: null, cat: 'Скоро', title: 'Лендинг для эксперта', desc: 'В разработке', placeholder: 'Эксперт' },
+    { url: null, cat: 'Скоро', title: 'Лендинг для курса', desc: 'В разработке', placeholder: 'Курс' }
+];
+---
+
+<section id="portfolio" class="portfolio-scroll">
+    <div class="portfolio-header">
+        <div class="section-label reveal">Портфолио</div>
+        <h2 class="section-title reveal d-1">Мои <em>работы</em></h2>
+        <p class="section-sub reveal d-2">Скролль вправо — увидишь все примеры</p>
+    </div>
+    <div class="portfolio-track">
+        {items.map(item => (
+            <a href={item.url || '#'} class="portfolio-card" target={item.url ? '_blank' : undefined} rel="noopener">
+                <div class="portfolio-preview">
+                    {item.url
+                        ? <iframe src={item.url} loading="lazy" tabindex="-1"></iframe>
+                        : <div class="portfolio-placeholder">{item.placeholder}</div>
+                    }
+                </div>
+                <div class="portfolio-info">
+                    <div class="portfolio-cat">{item.cat}</div>
+                    <h4>{item.title}</h4>
+                    <p>{item.desc}</p>
+                </div>
+                <div class="portfolio-arrow">→</div>
+            </a>
+        ))}
+    </div>
+    <div class="portfolio-hint">← Скролль вправо, чтобы увидеть все →</div>
+</section>
+
+<style>
+    .portfolio-scroll {
+        position: relative;
+        padding: 120px 0;
+        background: rgba(0,0,0,0.3);
+        border-top: 1px solid rgba(255,255,255,0.05);
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .portfolio-header {
+        max-width: 1200px;
+        margin: 0 auto 60px;
+        padding: 0 32px;
+    }
+    .portfolio-track {
+        display: flex;
+        gap: 32px;
+        padding: 0 32px;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: 20px;
+    }
+    .portfolio-track::-webkit-scrollbar { height: 6px; }
+    .portfolio-track::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); border-radius: 3px; }
+    .portfolio-track::-webkit-scrollbar-thumb { background: #3b82f6; border-radius: 3px; }
+    .portfolio-card {
+        flex-shrink: 0;
+        width: 420px;
+        background: rgba(255,255,255,0.03);
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 20px;
+        overflow: hidden;
+        text-decoration: none;
+        color: inherit;
+        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        position: relative;
+        scroll-snap-align: start;
+        display: block;
+    }
+    .portfolio-card:hover {
+        border-color: rgba(59,130,246,0.5);
+        transform: translateY(-8px);
+        box-shadow: 0 24px 60px rgba(59,130,246,0.2);
+    }
+    .portfolio-preview {
+        height: 260px;
+        background: linear-gradient(135deg, #0f1a2e, #1a2332);
+        position: relative;
+        overflow: hidden;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .portfolio-preview iframe {
+        width: 1200px;
+        height: 800px;
+        border: none;
+        transform: scale(0.35);
+        transform-origin: 0 0;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.5s;
+    }
+    .portfolio-card:hover .portfolio-preview iframe { opacity: 1; }
+    .portfolio-placeholder {
+        width: 100%; height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 48px;
+        font-weight: 900;
+        background: linear-gradient(135deg, rgba(59,130,246,0.15), rgba(139,92,246,0.15));
+        color: #4a5a6a;
+        letter-spacing: -2px;
+    }
+    .portfolio-info { padding: 24px 28px; }
+    .portfolio-cat {
+        font-size: 12px;
+        color: #3b82f6;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-weight: 600;
+        margin-bottom: 10px;
+    }
+    .portfolio-info h4 {
+        font-size: 20px;
+        font-weight: 700;
+        margin-bottom: 8px;
+    }
+    .portfolio-info p {
+        color: #8a9aa8;
+        font-size: 14px;
+    }
+    .portfolio-arrow {
+        position: absolute;
+        top: 24px; right: 24px;
+        width: 40px; height: 40px;
+        background: rgba(59,130,246,0.1);
+        border: 1px solid rgba(59,130,246,0.3);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #3b82f6;
+        font-size: 18px;
+        opacity: 0;
+        transform: translate(-8px, 8px);
+        transition: all 0.3s;
+    }
+    .portfolio-card:hover .portfolio-arrow {
+        opacity: 1;
+        transform: translate(0, 0);
+    }
+    .portfolio-hint {
+        text-align: center;
+        font-size: 13px;
+        color: #4a5a6a;
+        margin-top: 32px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+    }
+    @media (max-width: 1024px) {
+        .portfolio-card { width: 320px; }
+        .portfolio-preview iframe { opacity: 1; }
+        .portfolio-hint { display: none; }
+        .portfolio-header { padding: 0 20px; }
+        .portfolio-track { padding: 0 20px; }
+    }
+</style>

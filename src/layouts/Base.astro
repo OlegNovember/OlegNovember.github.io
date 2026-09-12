@@ -1,0 +1,51 @@
+---
+import '../styles/global.css';
+import ScrollProgress from '../components/ScrollProgress.astro';
+import CustomCursor from '../components/CustomCursor.astro';
+import Grain from '../components/Grain.astro';
+
+interface Props {
+    title: string;
+    description?: string;
+}
+
+const { 
+    title, 
+    description = 'Создаю лендинги, которые превращают трафик в заявки. От 9 000 ₽. Срок — 3 дня.' 
+} = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{title}</title>
+    <meta name="description" content={description}>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <ScrollProgress />
+    <CustomCursor />
+    <Grain />
+    
+    <slot />
+    
+    <script>
+        // Общие скрипты — reveal-анимации, счётчики
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+        
+        document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale')
+            .forEach(el => revealObserver.observe(el));
+    </script>
+</body>
+</html>

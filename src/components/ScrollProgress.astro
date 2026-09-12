@@ -1,0 +1,24 @@
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<style>
+    .scroll-progress {
+        position: fixed;
+        top: 0; left: 0;
+        height: 2px;
+        width: 0%;
+        background: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899);
+        z-index: 9999;
+        transition: width 0.1s;
+    }
+</style>
+
+<script>
+    const sp = document.getElementById('scrollProgress');
+    if (sp) {
+        window.addEventListener('scroll', () => {
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const progress = (window.scrollY / docHeight) * 100;
+            sp.style.width = progress + '%';
+        }, { passive: true });
+    }
+</script>

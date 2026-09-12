@@ -1,0 +1,142 @@
+<section id="about" class="section">
+    <div class="container">
+        <div class="section-label reveal">Обо мне</div>
+        <h2 class="section-title reveal d-1">Привет, я <em>Олег</em></h2>
+        <p class="section-sub reveal d-2">Делаю лендинги с 2020 года. Без шаблонов, без воды — только рабочие страницы, которые приносят заявки.</p>
+        
+        <div class="about-grid">
+            <div class="about-visual reveal-left">
+                <div class="about-photo">
+                    <span class="about-monogram">О</span>
+                </div>
+                <div class="about-badge">
+                    <span class="about-badge-dot"></span>
+                    Открыт для проектов
+                </div>
+            </div>
+            <div class="about-text reveal-right d-1">
+                <h3>Почему я</h3>
+                <p>Я не студия с менеджерами и очередями. Я — один человек, который отвечает за результат лично. Ты пишешь мне — я делаю. Никаких «передал в отдел» и «ждите ответа 3 дня».</p>
+                <ul class="about-list">
+                    <li><span class="check">✓</span><div><b>Чистый код</b><span>HTML, CSS, JS — без конструкторов и лишних библиотек. Быстро грузится, легко править.</span></div></li>
+                    <li><span class="check">✓</span><div><b>Адаптив под всё</b><span>Телефон, планшет, десктоп. Проверяю на реальных устройствах.</span></div></li>
+                    <li><span class="check">✓</span><div><b>Под ключ</b><span>Домен, хостинг, SSL, форма заявки — беру на себя.</span></div></li>
+                    <li><span class="check">✓</span><div><b>Безлимитные правки</b><span>В течение 14 дней после сдачи — правлю всё, что нужно.</span></div></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .about-grid {
+        display: grid;
+        grid-template-columns: 0.8fr 1.2fr;
+        gap: 80px;
+        align-items: center;
+        margin-top: 60px;
+    }
+    .about-visual { position: relative; }
+    .about-photo {
+        aspect-ratio: 1;
+        background: linear-gradient(135deg, rgba(59,130,246,0.15), rgba(139,92,246,0.15));
+        border: 1px solid rgba(59,130,246,0.2);
+        border-radius: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+    }
+    .about-photo::before {
+        content: "";
+        position: absolute;
+        inset: 20px;
+        border: 1px solid rgba(59,130,246,0.15);
+        border-radius: 16px;
+    }
+    .about-monogram {
+        font-size: 140px;
+        font-weight: 900;
+        background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        letter-spacing: -8px;
+    }
+    .about-badge {
+        position: absolute;
+        bottom: -16px; left: 50%;
+        transform: translateX(-50%);
+        padding: 10px 20px;
+        background: rgba(10,14,20,0.95);
+        border: 1px solid rgba(34,197,94,0.3);
+        border-radius: 50px;
+        font-size: 13px;
+        color: #22c55e;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        white-space: nowrap;
+    }
+    .about-badge-dot {
+        width: 8px; height: 8px;
+        background: #22c55e;
+        border-radius: 50%;
+        animation: pulse-dot 2s infinite;
+    }
+    @keyframes pulse-dot {
+        0%, 100% { box-shadow: 0 0 0 0 rgba(34,197,94,0.6); }
+        70% { box-shadow: 0 0 0 10px rgba(34,197,94,0); }
+    }
+    .about-text h3 {
+        font-size: 32px;
+        font-weight: 800;
+        margin-bottom: 20px;
+        letter-spacing: -1px;
+    }
+    .about-text > p {
+        color: #8a9aa8;
+        font-size: 16px;
+        margin-bottom: 32px;
+    }
+    .about-list {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+    .about-list li {
+        display: flex;
+        gap: 16px;
+        align-items: flex-start;
+    }
+    .about-list .check {
+        width: 28px; height: 28px;
+        background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+        color: #fff;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 14px;
+        flex-shrink: 0;
+        margin-top: 2px;
+    }
+    .about-list b {
+        display: block;
+        color: #fff;
+        font-size: 16px;
+        margin-bottom: 4px;
+    }
+    .about-list span {
+        color: #8a9aa8;
+        font-size: 14px;
+        line-height: 1.6;
+    }
+    @media (max-width: 1024px) {
+        .about-grid { grid-template-columns: 1fr; gap: 60px; }
+        .about-visual { max-width: 320px; margin: 0 auto; }
+    }
+</style>

@@ -1,0 +1,585 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Узнай, подходит ли тебе это — тест 30 секунд</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        font-family: "Inter", sans-serif;
+        background: #f7f9fc;
+        color: #1a2332;
+        line-height: 1.6;
+      }
+      .reveal,
+      .reveal-s {
+        opacity: 0;
+        transition:
+          opacity 1s cubic-bezier(0.16, 1, 0.3, 1),
+          transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .reveal {
+        transform: translateY(50px);
+      }
+      .reveal-s {
+        transform: scale(0.9);
+      }
+      .reveal.a,
+      .reveal-s.a {
+        opacity: 1;
+        transform: translate(0) scale(1);
+      }
+      .c {
+        max-width: 760px;
+        margin: 0 auto;
+        padding: 20px 20px 60px;
+      }
+      .hero {
+        background: linear-gradient(135deg, #1e3a5f, #2b6cb0);
+        border-radius: 24px;
+        padding: 60px 32px;
+        text-align: center;
+        color: #fff;
+        margin-bottom: 24px;
+        position: relative;
+        overflow: hidden;
+      }
+      .hero::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        right: -20%;
+        width: 300px;
+        height: 300px;
+        background: rgba(255, 255, 255, 0.06);
+        border-radius: 50%;
+      }
+      .badge {
+        display: inline-block;
+        background: rgba(255, 255, 255, 0.15);
+        padding: 6px 16px;
+        border-radius: 50px;
+        font-size: 13px;
+        margin-bottom: 18px;
+        position: relative;
+      }
+      .hero h1 {
+        font-size: 34px;
+        font-weight: 800;
+        line-height: 1.2;
+        margin-bottom: 14px;
+        position: relative;
+      }
+      .hero p {
+        font-size: 16px;
+        color: rgba(255, 255, 255, 0.85);
+        margin-bottom: 28px;
+        max-width: 460px;
+        margin-left: auto;
+        margin-right: auto;
+        position: relative;
+      }
+      .btn {
+        display: inline-block;
+        padding: 16px 34px;
+        background: #fff;
+        color: #1e3a5f;
+        border-radius: 12px;
+        font-size: 16px;
+        font-weight: 700;
+        text-decoration: none;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s;
+        font-family: inherit;
+      }
+      .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
+      }
+      .btn-p {
+        background: #2b6cb0;
+        color: #fff;
+      }
+      .btn-p:hover {
+        box-shadow: 0 12px 28px rgba(43, 108, 176, 0.4);
+      }
+      .btn-full {
+        display: block;
+        width: 100%;
+        text-align: center;
+      }
+      .card {
+        background: #fff;
+        border-radius: 20px;
+        padding: 32px 28px;
+        margin-bottom: 20px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+      }
+      .quiz {
+        display: none;
+      }
+      .quiz.on {
+        display: block;
+      }
+      .prog {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 28px;
+      }
+      .prog .d {
+        flex: 1;
+        height: 6px;
+        background: #e8edf3;
+        border-radius: 3px;
+        transition: background 0.3s;
+      }
+      .prog .d.a {
+        background: #2b6cb0;
+      }
+      .qs {
+        display: none;
+      }
+      .qs.a {
+        display: block;
+        animation: fi 0.3s ease;
+      }
+      @keyframes fi {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .qs h3 {
+        font-size: 20px;
+        font-weight: 700;
+        margin-bottom: 20px;
+        text-align: center;
+      }
+      .opt {
+        display: block;
+        width: 100%;
+        padding: 18px 20px;
+        background: #f7f9fc;
+        border: 2px solid #e8edf3;
+        border-radius: 14px;
+        font-size: 16px;
+        text-align: left;
+        cursor: pointer;
+        margin-bottom: 12px;
+        transition: all 0.2s;
+        color: #1a2332;
+        font-family: inherit;
+        font-weight: 500;
+      }
+      .opt:hover {
+        border-color: #2b6cb0;
+        background: #f0f6ff;
+      }
+      .res {
+        display: none;
+        text-align: center;
+        padding: 20px 0;
+      }
+      .res.a {
+        display: block;
+        animation: fi 0.4s ease;
+      }
+      .emo {
+        font-size: 64px;
+        margin-bottom: 16px;
+      }
+      .res h3 {
+        font-size: 24px;
+        margin-bottom: 12px;
+      }
+      .res p {
+        color: #4a5a6a;
+        margin-bottom: 24px;
+        font-size: 16px;
+      }
+      h2 {
+        font-size: 22px;
+        font-weight: 700;
+        margin-bottom: 18px;
+      }
+      .steps {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+      }
+      .step {
+        display: flex;
+        gap: 16px;
+        align-items: flex-start;
+        padding: 16px;
+        background: #f7f9fc;
+        border-radius: 14px;
+      }
+      .snum {
+        width: 36px;
+        height: 36px;
+        background: #2b6cb0;
+        color: #fff;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        flex-shrink: 0;
+        font-size: 15px;
+      }
+      .stxt {
+        padding-top: 6px;
+        font-size: 15px;
+      }
+      .t {
+        background: #f7f9fc;
+        border-radius: 14px;
+        padding: 20px;
+        margin-bottom: 12px;
+        border-left: 4px solid #2b6cb0;
+      }
+      .t .h {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 10px;
+      }
+      .t .av {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: #2b6cb0;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        flex-shrink: 0;
+      }
+      .t .n {
+        font-weight: 600;
+        font-size: 15px;
+      }
+      .t .r {
+        font-size: 13px;
+        color: #7d8fa3;
+      }
+      .t .tx {
+        color: #4a5a6a;
+        font-size: 15px;
+      }
+      .fg {
+        margin-bottom: 16px;
+      }
+      .fg label {
+        display: block;
+        font-size: 14px;
+        font-weight: 500;
+        margin-bottom: 6px;
+      }
+      .fg input,
+      .fg textarea {
+        width: 100%;
+        padding: 14px;
+        border: 2px solid #e8edf3;
+        border-radius: 12px;
+        font-size: 16px;
+        outline: none;
+        font-family: inherit;
+        transition: border 0.3s;
+        background: #f7f9fc;
+        color: #1a2332;
+      }
+      .fg textarea {
+        resize: vertical;
+        min-height: 70px;
+      }
+      .fg input:focus,
+      .fg textarea:focus {
+        border-color: #2b6cb0;
+        background: #fff;
+      }
+      .cb {
+        display: flex;
+        gap: 10px;
+        align-items: flex-start;
+        margin-bottom: 20px;
+        font-size: 13px;
+        color: #7d8fa3;
+      }
+      .cb input {
+        margin-top: 4px;
+        width: 18px;
+        height: 18px;
+        accent-color: #2b6cb0;
+        flex-shrink: 0;
+      }
+      .cb a {
+        color: #2b6cb0;
+      }
+      footer {
+        text-align: center;
+        font-size: 13px;
+        color: #8a9aa8;
+        padding: 20px 0;
+      }
+      footer a {
+        color: #2b6cb0;
+        text-decoration: none;
+      }
+      @media (max-width: 480px) {
+        .hero {
+          padding: 40px 20px;
+        }
+        .hero h1 {
+          font-size: 26px;
+        }
+        .card {
+          padding: 24px 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="c">
+      <section class="hero">
+        <div class="badge reveal">⚡ 30 секунд</div>
+        <h1 class="reveal">Узнай, подходит ли тебе это</h1>
+        <p class="reveal">
+          Ответь на 3 вопроса и получи персональный результат. Без воды, без
+          обязательств.
+        </p>
+        <button class="btn reveal" onclick="startQuiz()">Пройти тест →</button>
+      </section>
+
+      <div class="card">
+        <div class="quiz" id="quiz">
+          <div class="prog">
+            <div class="d a" data-s="1"></div>
+            <div class="d" data-s="2"></div>
+            <div class="d" data-s="3"></div>
+          </div>
+
+          <div class="qs a" data-s="1">
+            <h3>Сколько времени готов уделять?</h3>
+            <button class="opt" onclick="ans(1)">Меньше часа в день</button>
+            <button class="opt" onclick="ans(2)">1–3 часа в день</button>
+            <button class="opt" onclick="ans(3)">Больше 3 часов</button>
+          </div>
+
+          <div class="qs" data-s="2">
+            <h3>Есть ли опыт в этой сфере?</h3>
+            <button class="opt" onclick="ans(1)">Нет, полный ноль</button>
+            <button class="opt" onclick="ans(2)">
+              Что-то пробовал, но не зашло
+            </button>
+            <button class="opt" onclick="ans(3)">Есть опыт, хочу расти</button>
+          </div>
+
+          <div class="qs" data-s="3">
+            <h3>Что для тебя важнее всего?</h3>
+            <button class="opt" onclick="ans(1)">Поддержка и наставник</button>
+            <button class="opt" onclick="ans(2)">Готовые инструменты</button>
+            <button class="opt" onclick="ans(3)">Свободный график</button>
+          </div>
+
+          <div class="res" id="res">
+            <div class="emo" id="emo">🎯</div>
+            <h3 id="rt">Тебе подходит!</h3>
+            <p id="rx">
+              Ты готов начать. Оставь заявку — я свяжусь с тобой и расскажу
+              первый шаг.
+            </p>
+            <a href="#form" class="btn btn-p btn-full" onclick="scrollForm()"
+              >Оставить заявку</a
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="card reveal">
+        <h2>Как это работает</h2>
+        <div class="steps">
+          <div class="step">
+            <div class="snum">1</div>
+            <div class="stxt">Ты оставляешь заявку или пишешь в Telegram</div>
+          </div>
+          <div class="step">
+            <div class="snum">2</div>
+            <div class="stxt">Я связываюсь и отвечаю на вопросы</div>
+          </div>
+          <div class="step">
+            <div class="snum">3</div>
+            <div class="stxt">Ты получаешь первый шаг и материалы</div>
+          </div>
+          <div class="step">
+            <div class="snum">4</div>
+            <div class="stxt">Начинаешь работать с поддержкой</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card reveal">
+        <h2>Отзывы</h2>
+        <div class="t">
+          <div class="h">
+            <div class="av">А</div>
+            <div>
+              <div class="n">Анна, 27 лет</div>
+              <div class="r">Москва</div>
+            </div>
+          </div>
+          <div class="tx">
+            Пришла без опыта. Через месяц вышла на первые деньги. Главное — не
+            бросать и делать шаг за шагом.
+          </div>
+        </div>
+        <div class="t">
+          <div class="h">
+            <div class="av">Д</div>
+            <div>
+              <div class="n">Дмитрий, 34 года</div>
+              <div class="r">СПб</div>
+            </div>
+          </div>
+          <div class="tx">
+            Совмещаю с работой. Уделяю час вечером. Результат есть, и это
+            мотивирует двигаться дальше.
+          </div>
+        </div>
+        <div class="t">
+          <div class="h">
+            <div class="av">Е</div>
+            <div>
+              <div class="n">Елена, 41 год</div>
+              <div class="r">Казань</div>
+            </div>
+          </div>
+          <div class="tx">
+            Долго сомневалась, но решилась. Сейчас у меня своя небольшая
+            команда. Спасибо за поддержку.
+          </div>
+        </div>
+      </div>
+
+      <div class="card" id="form">
+        <h2>Оставить заявку</h2>
+        <form action="https://formspree.io/f/your_form_id" method="POST">
+          <div class="fg">
+            <label>Имя</label
+            ><input
+              type="text"
+              name="name"
+              placeholder="Как к тебе обращаться?"
+              required
+            />
+          </div>
+          <div class="fg">
+            <label>Telegram или телефон</label
+            ><input
+              type="text"
+              name="contact"
+              placeholder="@username или +7..."
+              required
+            />
+          </div>
+          <div class="fg">
+            <label>Комментарий</label
+            ><textarea
+              name="message"
+              placeholder="Коротко о себе..."
+            ></textarea>
+          </div>
+          <div class="cb">
+            <input type="checkbox" required id="c4" /><label for="c4"
+              >Согласен на обработку персональных данных и принимаю
+              <a href="/privacy.html">политику конфиденциальности</a></label
+            >
+          </div>
+          <button type="submit" class="btn btn-p btn-full">Отправить</button>
+        </form>
+      </div>
+
+      <footer>
+        <p>© 2026 · <a href="/">На главную</a></p>
+      </footer>
+    </div>
+
+    <script>
+      let step = 0;
+      function startQuiz() {
+        document.getElementById("quiz").classList.add("on");
+        document
+          .getElementById("quiz")
+          .scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+      function ans(v) {
+        step++;
+        const steps = document.querySelectorAll(".qs");
+        const dots = document.querySelectorAll(".prog .d");
+        steps.forEach((s) => s.classList.remove("a"));
+        dots.forEach((d, i) => {
+          if (i < step) d.classList.add("a");
+        });
+        if (step < 3) {
+          document
+            .querySelector('.qs[data-s="' + (step + 1) + '"]')
+            .classList.add("a");
+        } else {
+          steps.forEach((s) => s.classList.remove("a"));
+          document
+            .querySelectorAll(".prog .d")
+            .forEach((d) => d.classList.add("a"));
+          const res = document.getElementById("res");
+          res.classList.add("a");
+          if (v >= 2) {
+            document.getElementById("emo").textContent = "🔥";
+            document.getElementById("rt").textContent = "Тебе точно подходит!";
+            document.getElementById("rx").textContent =
+              "Ты готов начать. Оставь заявку — я свяжусь и расскажу первый шаг.";
+          } else {
+            document.getElementById("emo").textContent = "🤔";
+            document.getElementById("rt").textContent = "Стоит подумать";
+            document.getElementById("rx").textContent =
+              "Возможно, нужно больше времени. Но если хочешь попробовать — оставь заявку, обсудим.";
+          }
+        }
+      }
+      function scrollForm() {
+        document.getElementById("form").scrollIntoView({ behavior: "smooth" });
+      }
+      const io = new IntersectionObserver(
+        (es) => {
+          es.forEach((e) => {
+            if (e.isIntersecting) {
+              e.target.classList.add("a");
+              io.unobserve(e.target);
+            }
+          });
+        },
+        { threshold: 0.12 },
+      );
+      document
+        .querySelectorAll(".reveal,.reveal-s")
+        .forEach((el) => io.observe(el));
+    </script>
+  </body>
+</html>

@@ -1,0 +1,114 @@
+<footer class="footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <div class="footer-logo">
+                    <span class="logo-mark">Г</span>
+                    <span>Олег <b>Громов</b></span>
+                </div>
+                <p>Вебмастер. Делаю лендинги, которые превращают трафик в заявки. Работаю по всей России.</p>
+            </div>
+            <div class="footer-col">
+                <h5>Навигация</h5>
+                <ul>
+                    <li><a href="#about">Обо мне</a></li>
+                    <li><a href="#services">Услуги</a></li>
+                    <li><a href="#portfolio">Портфолио</a></li>
+                    <li><a href="#faq">FAQ</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h5>Контакты</h5>
+                <ul>
+                    <li><a href="https://t.me/your_telegram">Telegram</a></li>
+                    <li><a href="mailto:mail@example.com">Email</a></li>
+                    <li><a href="tel:+70000000000">+7 000 000-00-00</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h5>Документы</h5>
+                <ul>
+                    <li><a href="/privacy">Политика ПДн</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>© 2026 Олег Громов. Все права защищены.</span>
+            <span>Сделано с <span class="heart">♥</span> и чистым кодом</span>
+        </div>
+    </div>
+</footer>
+
+<style>
+    .footer {
+        background: rgba(0,0,0,0.5);
+        padding: 80px 0 32px;
+        border-top: 1px solid rgba(255,255,255,0.05);
+    }
+    .footer-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr 1fr;
+        gap: 48px;
+        margin-bottom: 48px;
+    }
+    .footer-logo {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 18px;
+        font-weight: 500;
+        margin-bottom: 20px;
+    }
+    .footer-logo b { color: #3b82f6; }
+    .logo-mark {
+        width: 36px; height: 36px;
+        background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 800;
+        font-size: 16px;
+        color: #fff;
+    }
+    .footer-col p {
+        color: #6a7a8a;
+        font-size: 14px;
+        line-height: 1.8;
+    }
+    .footer-col h5 {
+        font-size: 14px;
+        font-weight: 700;
+        color: #fff;
+        margin-bottom: 20px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+    .footer-col ul { list-style: none; }
+    .footer-col li { margin-bottom: 12px; }
+    .footer-col a {
+        color: #8a9aa8;
+        text-decoration: none;
+        font-size: 14px;
+        transition: color 0.2s;
+    }
+    .footer-col a:hover { color: #3b82f6; }
+    .footer-bottom {
+        padding-top: 32px;
+        border-top: 1px solid rgba(255,255,255,0.05);
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 12px;
+        font-size: 13px;
+        color: #4a5a6a;
+    }
+    .heart { color: #ec4899; }
+    @media (max-width: 1024px) {
+        .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 640px) {
+        .footer-grid { grid-template-columns: 1fr; }
+        .footer-bottom { flex-direction: column; text-align: center; }
+    }
+</style>

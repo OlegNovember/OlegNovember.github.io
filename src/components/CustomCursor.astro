@@ -1,0 +1,70 @@
+<div class="cursor" id="cursor"></div>
+<div class="cursor-follower" id="cursorFollower"></div>
+
+<style>
+    .cursor, .cursor-follower {
+        position: fixed;
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 9998;
+        mix-blend-mode: difference;
+        will-change: transform;
+    }
+    .cursor {
+        width: 8px; height: 8px;
+        background: #fff;
+        transform: translate(-50%, -50%);
+    }
+    .cursor-follower {
+        width: 36px; height: 36px;
+        border: 1px solid rgba(255,255,255,0.5);
+        transform: translate(-50%, -50%);
+        transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), width 0.3s, height 0.3s, background 0.3s, border-color 0.3s;
+    }
+    .cursor.hover, .cursor-follower.hover {
+        width: 60px; height: 60px;
+        background: rgba(59,130,246,0.3);
+        border-color: #3b82f6;
+    }
+    @media (max-width: 1024px) {
+        .cursor, .cursor-follower { display: none; }
+    }
+</style>
+
+<script>
+    if (window.matchMedia('(pointer: fine)').matches) {
+        const cursor = document.getElementById('cursor');
+        const follower = document.getElementById('cursorFollower');
+        let mx = 0, my = 0, fx = 0, fy = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            mx = e.clientX; my = e.clientY;
+            if (cursor) {
+                cursor.style.left = mx + 'px';
+                cursor.style.top = my + 'px';
+            }
+        });
+
+        function animate() {
+            fx += (mx - fx) * 0.15;
+            fy += (my - fy) * 0.15;
+            if (follower) {
+                follower.style.left = fx + 'px';
+                follower.style.top = fy + 'px';
+            }
+            requestAnimationFrame(animate);
+        }
+        animate();
+
+        document.querySelectorAll('a, button, .bento-item, .portfolio-card, .faq-q').forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursor?.classList.add('hover');
+                follower?.classList.add('hover');
+            });
+            el.addEventListener('mouseleave', () => {
+                cursor?.classList.remove('hover');
+                follower?.classList.remove('hover');
+            });
+        });
+    }
+</script>

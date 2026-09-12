@@ -1,0 +1,184 @@
+<section id="services" class="section section-dark">
+    <div class="container">
+        <div class="section-label reveal">Услуги</div>
+        <h2 class="section-title reveal d-1">Что я <em>делаю</em></h2>
+        <p class="section-sub reveal d-2">Три формата — под разные задачи и бюджеты</p>
+
+        <div class="bento reveal d-3">
+            <div class="bento-item bento-large">
+                <div class="bento-tag">Хит</div>
+                <h3>Лендинг<br /><em>под ключ</em></h3>
+                <p>Полноценная страница с анимациями, формой заявки, адаптивом. Всё, чтобы начать продавать.</p>
+                <ul class="bento-list">
+                    <li>Любая структура блоков</li>
+                    <li>Анимации Tilda-style</li>
+                    <li>Форма + Telegram-уведомления</li>
+                    <li>Домен, хостинг, SSL</li>
+                </ul>
+                <div class="bento-price">
+                    <span class="price-value">9 000 ₽</span>
+                    <span class="price-note">+ 1 000 ₽ хостинг/год</span>
+                </div>
+                <a href="#form" class="btn btn-primary btn-full">Заказать</a>
+            </div>
+
+            <div class="bento-item bento-medium">
+                <div class="bento-tag bento-tag-alt">Быстро</div>
+                <h3>Визитка</h3>
+                <p>Одностраничник с контактами и ссылкой на Telegram. Для личного бренда.</p>
+                <div class="bento-price">
+                    <span class="price-value">5 000 ₽</span>
+                </div>
+                <a href="#form" class="btn btn-ghost btn-full">Заказать</a>
+            </div>
+
+            <div class="bento-item bento-medium">
+                <div class="bento-tag bento-tag-alt">Максимум</div>
+                <h3>Лендинг + реклама</h3>
+                <p>Страница + настройка Яндекс.Директ. Готовый поток заявок.</p>
+                <div class="bento-price">
+                    <span class="price-value">20 000 ₽</span>
+                </div>
+                <a href="#form" class="btn btn-ghost btn-full">Заказать</a>
+            </div>
+
+            <div class="bento-item bento-small">
+                <div class="bento-icon">🔧</div>
+                <h4>Правки</h4>
+                <p>Обновление контента, блоков, стилей</p>
+            </div>
+            <div class="bento-item bento-small">
+                <div class="bento-icon">🌐</div>
+                <h4>Хостинг</h4>
+                <p>Домен + хостинг + SSL на год</p>
+            </div>
+            <div class="bento-item bento-small">
+                <div class="bento-icon">💬</div>
+                <h4>Поддержка</h4>
+                <p>Ответы на вопросы 24/7</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .bento {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+    }
+    .bento-item {
+        background: rgba(255,255,255,0.03);
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 20px;
+        padding: 32px;
+        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        position: relative;
+        overflow: hidden;
+    }
+    .bento-item:hover {
+        border-color: rgba(59,130,246,0.4);
+        background: rgba(59,130,246,0.05);
+        transform: translateY(-4px);
+    }
+    .bento-large {
+        grid-column: span 2;
+        grid-row: span 2;
+        display: flex;
+        flex-direction: column;
+    }
+    .bento-medium { grid-column: span 2; }
+    .bento-small { grid-column: span 1; }
+    .bento-tag {
+        display: inline-block;
+        font-size: 11px;
+        padding: 4px 12px;
+        background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+        color: #fff;
+        border-radius: 50px;
+        font-weight: 700;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        margin-bottom: 20px;
+        align-self: flex-start;
+    }
+    .bento-tag-alt {
+        background: rgba(255,255,255,0.1);
+        color: #8a9aa8;
+    }
+    .bento-item h3 {
+        font-size: 32px;
+        font-weight: 800;
+        line-height: 1.1;
+        letter-spacing: -1px;
+        margin-bottom: 16px;
+    }
+    .bento-large h3 { font-size: 44px; }
+    .bento-item h3 em {
+        font-style: normal;
+        background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    .bento-item h4 {
+        font-size: 18px;
+        font-weight: 700;
+        margin-bottom: 8px;
+    }
+    .bento-item p {
+        color: #8a9aa8;
+        font-size: 15px;
+        line-height: 1.7;
+        margin-bottom: 24px;
+    }
+    .bento-list {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-bottom: 28px;
+    }
+    .bento-list li {
+        color: #c8d4e0;
+        font-size: 14px;
+        padding-left: 24px;
+        position: relative;
+    }
+    .bento-list li::before {
+        content: "→";
+        position: absolute;
+        left: 0;
+        color: #3b82f6;
+        font-weight: 700;
+    }
+    .bento-price {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        margin-bottom: 24px;
+        margin-top: auto;
+    }
+    .bento-large .bento-price { margin-top: 0; }
+    .price-value {
+        font-size: 36px;
+        font-weight: 900;
+        background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        letter-spacing: -1px;
+    }
+    .price-note { font-size: 13px; color: #6a7a8a; }
+    .bento-icon { font-size: 32px; margin-bottom: 16px; }
+    .bento-small p { margin-bottom: 0; font-size: 13px; }
+    @media (max-width: 1024px) {
+        .bento { grid-template-columns: repeat(2, 1fr); }
+        .bento-large { grid-column: span 2; grid-row: span 1; }
+        .bento-medium { grid-column: span 2; }
+    }
+    @media (max-width: 640px) {
+        .bento { grid-template-columns: 1fr; }
+        .bento-large, .bento-medium, .bento-small { grid-column: span 1; }
+    }
+</style>

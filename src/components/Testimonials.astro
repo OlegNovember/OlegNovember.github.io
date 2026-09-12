@@ -1,0 +1,99 @@
+---
+const items = [
+    { text: 'Олег сделал лендинг за 2 дня. Я даже не успел подумать, что нужно что-то ещё. Всё чётко, без воды. Заявки пошли в первый же день.', name: 'Анна К.', role: 'Психолог · Москва', avatar: 'А' },
+    { text: 'Заказывал лендинг для команды. Получил не просто страницу, а инструмент. Ребята скидывают ссылку — люди сами пишут. Раньше объясняли вручную.', name: 'Дмитрий С.', role: 'Лидер команды · СПб', avatar: 'Д' },
+    { text: 'Работали над лендингом для курса. Олег предложил структуру, которой у меня не было. Конверсия выросла в 2 раза. Рекомендую.', name: 'Елена М.', role: 'Онлайн-школа · Казань', avatar: 'Е' }
+];
+---
+
+<section class="section section-dark">
+    <div class="container">
+        <div class="section-label reveal">Отзывы</div>
+        <h2 class="section-title reveal d-1">Что говорят <em>клиенты</em></h2>
+        <p class="section-sub reveal d-2">Реальные отзывы людей, с которыми я работал</p>
+
+        <div class="testimonials-grid">
+            {items.map((t, i) => (
+                <div class={`testimonial reveal d-${i + 1}`}>
+                    <div class="testimonial-quote">"</div>
+                    <p class="testimonial-text">{t.text}</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">{t.avatar}</div>
+                        <div>
+                            <div class="testimonial-name">{t.name}</div>
+                            <div class="testimonial-role">{t.role}</div>
+                        </div>
+                    </div>
+                </div>
+            ))}
+        </div>
+    </div>
+</section>
+
+<style>
+    .testimonials-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+        margin-top: 60px;
+    }
+    .testimonial {
+        background: rgba(255,255,255,0.03);
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 20px;
+        padding: 36px 32px;
+        transition: all 0.4s;
+    }
+    .testimonial:hover {
+        border-color: rgba(59,130,246,0.4);
+        transform: translateY(-6px);
+    }
+    .testimonial-quote {
+        font-size: 60px;
+        line-height: 0.5;
+        font-weight: 900;
+        background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 20px;
+        font-family: Georgia, serif;
+    }
+    .testimonial-text {
+        color: #c8d4e0;
+        font-size: 15px;
+        line-height: 1.8;
+        margin-bottom: 28px;
+    }
+    .testimonial-author {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding-top: 24px;
+        border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    .testimonial-avatar {
+        width: 44px; height: 44px;
+        background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 800;
+        color: #fff;
+        font-size: 16px;
+        flex-shrink: 0;
+    }
+    .testimonial-name {
+        font-weight: 700;
+        font-size: 15px;
+        color: #fff;
+    }
+    .testimonial-role {
+        font-size: 13px;
+        color: #6a7a8a;
+    }
+    @media (max-width: 1024px) {
+        .testimonials-grid { grid-template-columns: 1fr; }
+    }
+</style>

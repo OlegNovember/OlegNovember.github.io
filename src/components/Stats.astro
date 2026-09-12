@@ -1,0 +1,87 @@
+---
+const stats = [
+    { num: 50, suffix: '+', label: 'клиентов' },
+    { num: 3, suffix: ' дня', label: 'средний срок' },
+    { num: 120, suffix: '+', label: 'проектов' },
+    { num: null, text: '24/7', label: 'поддержка' }
+];
+---
+
+<section class="stats">
+    <div class="stats-grid">
+        {stats.map((s, i) => (
+            <div class={`stat reveal-scale d-${i + 1}`}>
+                {s.text 
+                    ? <div class="stat-num">{s.text}</div>
+                    : <div class="stat-num" data-count={s.num} data-suffix={s.suffix}>0</div>
+                }
+                <div class="stat-label">{s.label}</div>
+            </div>
+        ))}
+    </div>
+</section>
+
+<style>
+    .stats {
+        padding: 80px 0;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .stats-grid {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 32px;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 40px;
+    }
+    .stat { text-align: center; }
+    .stat-num {
+        font-size: 52px;
+        font-weight: 900;
+        line-height: 1;
+        background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        letter-spacing: -2px;
+    }
+    .stat-label {
+        font-size: 13px;
+        color: #6a7a8a;
+        margin-top: 12px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+    }
+    @media (max-width: 1024px) {
+        .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 32px; }
+        .stat-num { font-size: 40px; }
+    }
+    @media (max-width: 640px) {
+        .stats-grid { padding: 0 20px; }
+    }
+</style>
+
+<script>
+    const counters = document.querySelectorAll('[data-count]');
+    const obs = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const el = entry.target as HTMLElement;
+                const target = parseInt(el.dataset.count || '0');
+                const suffix = el.dataset.suffix || '';
+                let current = 0;
+                const step = Math.ceil(target / 50);
+                const timer = setInterval(() => {
+                    current += step;
+                    if (current >= target) {
+                        current = target;
+                        clearInterval(timer);
+                    }
+                    el.textContent = current + suffix;
+                }, 30);
+                obs.unobserve(el);
+            }
+        });
+    }, { threshold: 0.5 });
+    counters.forEach(c => obs.observe(c));
+</script>

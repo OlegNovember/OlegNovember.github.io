@@ -1,0 +1,52 @@
+---
+const items = [
+    'Адаптивный дизайн',
+    'Форма заявки',
+    'SSL-сертификат',
+    'Безлимитные правки',
+    'Хостинг и домен',
+    'Анимации Tilda',
+    'SEO-оптимизация'
+];
+const doubled = [...items, ...items];
+---
+
+<div class="marquee">
+    <div class="marquee-track">
+        {doubled.map(item => <span>{item}</span>)}
+    </div>
+</div>
+
+<style>
+    .marquee {
+        padding: 32px 0;
+        overflow: hidden;
+        border-top: 1px solid rgba(255,255,255,0.05);
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+        background: rgba(0,0,0,0.3);
+    }
+    .marquee-track {
+        display: flex;
+        gap: 60px;
+        animation: scroll 40s linear infinite;
+        white-space: nowrap;
+        width: max-content;
+    }
+    .marquee-track span {
+        font-size: 20px;
+        font-weight: 600;
+        color: #4a5a6a;
+        display: flex;
+        align-items: center;
+        gap: 60px;
+    }
+    .marquee-track span::after {
+        content: "✦";
+        color: #3b82f6;
+        font-size: 14px;
+    }
+    @keyframes scroll {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-50%); }
+    }
+</style>

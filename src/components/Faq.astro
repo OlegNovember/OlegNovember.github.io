@@ -1,0 +1,101 @@
+---
+const items = [
+    { q: 'Сколько стоит лендинг?', a: 'Базовый лендинг — 9 000 ₽. В цену входит: вёрстка, адаптив, форма заявки, анимации, подключение домена и SSL. Хостинг на год — 1 000 ₽. Визитка — 5 000 ₽. Лендинг + реклама — 20 000 ₽.' },
+    { q: 'Сколько времени займёт?', a: 'Стандартный срок — 3 дня. Если срочно — сделаю за 1 день (+50% к цене). Визитка — за 1 день.' },
+    { q: 'Что нужно от меня?', a: 'Имя, фото (если есть), ссылку на Telegram, краткое описание деятельности. Всё остальное — тексты, структуру, дизайн — я беру на себя.' },
+    { q: 'Как оплата?', a: '50% предоплата, 50% после сдачи. Перевод на карту СБП. Работаю как самозанятый — выдаю чек.' },
+    { q: 'А если не понравится?', a: 'Показываю промежуточный результат. Правим до тех пор, пока не понравится. В течение 14 дней после сдачи — безлимитные правки бесплатно.' },
+    { q: 'Хостинг и домен — на кого?', a: 'Могу оформить на себя (включено в цену), могу на тебя — как удобнее. Если на меня — через год продлеваем за 1 000 ₽.' }
+];
+---
+
+<section id="faq" class="section">
+    <div class="container">
+        <div class="section-label reveal">FAQ</div>
+        <h2 class="section-title reveal d-1">Частые <em>вопросы</em></h2>
+        <p class="section-sub reveal d-2">Не нашёл ответ? Напиши в Telegram — отвечу лично</p>
+
+        <div class="faq-list reveal d-3">
+            {items.map(item => (
+                <div class="faq-item">
+                    <button class="faq-q" type="button">
+                        <span>{item.q}</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-a">
+                        <p>{item.a}</p>
+                    </div>
+                </div>
+            ))}
+        </div>
+    </div>
+</section>
+
+<style>
+    .faq-list {
+        max-width: 800px;
+        margin: 60px auto 0;
+    }
+    .faq-item { border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .faq-q {
+        width: 100%;
+        padding: 28px 0;
+        background: transparent;
+        border: none;
+        color: #fff;
+        font-size: 18px;
+        font-weight: 600;
+        text-align: left;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 24px;
+        font-family: inherit;
+        transition: color 0.3s;
+    }
+    .faq-q:hover { color: #3b82f6; }
+    .faq-icon {
+        width: 32px; height: 32px;
+        border: 1px solid rgba(59,130,246,0.3);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #3b82f6;
+        font-size: 20px;
+        font-weight: 300;
+        flex-shrink: 0;
+        transition: transform 0.3s, background 0.3s;
+    }
+    .faq-item.open .faq-icon {
+        transform: rotate(45deg);
+        background: rgba(59,130,246,0.1);
+    }
+    .faq-a {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.4s ease, padding 0.4s ease;
+    }
+    .faq-item.open .faq-a {
+        max-height: 300px;
+        padding-bottom: 28px;
+    }
+    .faq-a p {
+        color: #8a9aa8;
+        font-size: 15px;
+        line-height: 1.8;
+    }
+</style>
+
+<script>
+    document.querySelectorAll('.faq-q').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const item = btn.parentElement;
+            if (!item) return;
+            const isOpen = item.classList.contains('open');
+            document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+            if (!isOpen) item.classList.add('open');
+        });
+    });
+</script>

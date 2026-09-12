@@ -1,0 +1,903 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Алексей Петров — Наставник</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        font-family: "Inter", sans-serif;
+        background: #0a0e14;
+        color: #e6edf3;
+        line-height: 1.6;
+        overflow-x: hidden;
+      }
+      .reveal,
+      .reveal-l,
+      .reveal-r,
+      .reveal-s {
+        opacity: 0;
+        transition:
+          opacity 1s cubic-bezier(0.16, 1, 0.3, 1),
+          transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .reveal {
+        transform: translateY(60px);
+      }
+      .reveal-l {
+        transform: translateX(-80px);
+      }
+      .reveal-r {
+        transform: translateX(80px);
+      }
+      .reveal-s {
+        transform: scale(0.92);
+      }
+      .reveal.a,
+      .reveal-l.a,
+      .reveal-r.a,
+      .reveal-s.a {
+        opacity: 1;
+        transform: translate(0) scale(1);
+      }
+      .d1 {
+        transition-delay: 0.1s;
+      }
+      .d2 {
+        transition-delay: 0.2s;
+      }
+      .d3 {
+        transition-delay: 0.3s;
+      }
+      .d4 {
+        transition-delay: 0.4s;
+      }
+      .hero {
+        padding: 140px 0 100px;
+        background: linear-gradient(-45deg, #0a0e14, #0f1a2e, #1a2332, #0a0e14);
+        background-size: 400% 400%;
+        animation: bg 18s ease infinite;
+        position: relative;
+        overflow: hidden;
+      }
+      @keyframes bg {
+        0%,
+        100% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+      }
+      .hero::before {
+        content: "";
+        position: absolute;
+        top: -20%;
+        right: -10%;
+        width: 600px;
+        height: 600px;
+        background: radial-gradient(
+          circle,
+          rgba(59, 130, 246, 0.15),
+          transparent 70%
+        );
+        border-radius: 50%;
+      }
+      .c {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 0 24px;
+      }
+      .hero-in {
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 60px;
+        align-items: center;
+        position: relative;
+        z-index: 1;
+      }
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 8px 18px;
+        background: rgba(59, 130, 246, 0.1);
+        border: 1px solid rgba(59, 130, 246, 0.3);
+        border-radius: 50px;
+        font-size: 13px;
+        color: #a5c8ff;
+        margin-bottom: 24px;
+      }
+      .dot {
+        width: 8px;
+        height: 8px;
+        background: #22c55e;
+        border-radius: 50%;
+        animation: p 2s infinite;
+      }
+      @keyframes p {
+        0%,
+        100% {
+          box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.6);
+        }
+        70% {
+          box-shadow: 0 0 0 10px rgba(34, 197, 94, 0);
+        }
+      }
+      h1 {
+        font-size: 56px;
+        font-weight: 900;
+        line-height: 1.05;
+        letter-spacing: -2px;
+        margin-bottom: 20px;
+        background: linear-gradient(135deg, #fff, #a5c8ff, #8b5cf6);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      .sub {
+        font-size: 17px;
+        color: #8a9aa8;
+        margin-bottom: 32px;
+        max-width: 520px;
+      }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 16px 32px;
+        border-radius: 12px;
+        font-size: 15px;
+        font-weight: 600;
+        text-decoration: none;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s;
+        font-family: inherit;
+      }
+      .btn-p {
+        background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+        color: #fff;
+        box-shadow: 0 8px 24px rgba(59, 130, 246, 0.3);
+      }
+      .btn-p:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 16px 40px rgba(59, 130, 246, 0.5);
+      }
+      .btn-g {
+        background: rgba(255, 255, 255, 0.05);
+        color: #e6edf3;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+      .btn-g:hover {
+        background: rgba(255, 255, 255, 0.1);
+        border-color: rgba(59, 130, 246, 0.5);
+      }
+      .btns {
+        display: flex;
+        gap: 14px;
+        flex-wrap: wrap;
+        margin-bottom: 48px;
+      }
+      .photo {
+        aspect-ratio: 3/4;
+        border-radius: 24px;
+        background: linear-gradient(
+          135deg,
+          rgba(59, 130, 246, 0.15),
+          rgba(139, 92, 246, 0.15)
+        );
+        border: 1px solid rgba(59, 130, 246, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 100px;
+        overflow: hidden;
+        position: relative;
+      }
+      .photo::before {
+        content: "";
+        position: absolute;
+        inset: 16px;
+        border: 1px solid rgba(59, 130, 246, 0.15);
+        border-radius: 16px;
+      }
+      .mono {
+        font-size: 120px;
+        font-weight: 900;
+        background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        letter-spacing: -8px;
+      }
+      .trust {
+        display: flex;
+        gap: 32px;
+        flex-wrap: wrap;
+      }
+      .ti b {
+        font-size: 24px;
+        font-weight: 800;
+        color: #fff;
+        display: block;
+      }
+      .ti span {
+        font-size: 12px;
+        color: #6a7a8a;
+      }
+      .stat {
+        padding: 70px 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      }
+      .sg {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 40px;
+        text-align: center;
+      }
+      .sn {
+        font-size: 48px;
+        font-weight: 900;
+        background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        letter-spacing: -2px;
+      }
+      .sl {
+        font-size: 12px;
+        color: #6a7a8a;
+        margin-top: 10px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+      }
+      section {
+        padding: 100px 0;
+      }
+      .lbl {
+        display: inline-block;
+        font-size: 12px;
+        color: #3b82f6;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        font-weight: 600;
+        margin-bottom: 18px;
+        padding: 6px 14px;
+        background: rgba(59, 130, 246, 0.1);
+        border-radius: 50px;
+        border: 1px solid rgba(59, 130, 246, 0.2);
+      }
+      .h2 {
+        font-size: 48px;
+        font-weight: 900;
+        letter-spacing: -2px;
+        margin-bottom: 18px;
+        color: #fff;
+      }
+      .h2 em {
+        font-style: normal;
+        background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      .ss {
+        font-size: 16px;
+        color: #8a9aa8;
+        margin-bottom: 50px;
+        max-width: 600px;
+      }
+      .cards {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+      }
+      .card {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 20px;
+        padding: 32px;
+        transition: all 0.4s;
+      }
+      .card:hover {
+        border-color: rgba(59, 130, 246, 0.4);
+        transform: translateY(-6px);
+      }
+      .card h3 {
+        font-size: 20px;
+        margin-bottom: 12px;
+        color: #fff;
+      }
+      .card p {
+        color: #8a9aa8;
+        font-size: 15px;
+      }
+      .icon {
+        font-size: 36px;
+        margin-bottom: 18px;
+      }
+      .steps {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 24px;
+      }
+      .step {
+        padding: 32px 26px;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 20px;
+        transition: all 0.4s;
+      }
+      .step:hover {
+        border-color: rgba(59, 130, 246, 0.4);
+        transform: translateY(-6px);
+      }
+      .snum {
+        font-family: monospace;
+        font-size: 14px;
+        color: #3b82f6;
+        font-weight: 700;
+        letter-spacing: 2px;
+        margin-bottom: 16px;
+      }
+      .step h4 {
+        font-size: 19px;
+        margin-bottom: 10px;
+        color: #fff;
+      }
+      .step p {
+        color: #8a9aa8;
+        font-size: 14px;
+      }
+      .tgrid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+      }
+      .t {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 20px;
+        padding: 32px;
+      }
+      .tq {
+        font-size: 56px;
+        line-height: 0.5;
+        font-weight: 900;
+        background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 16px;
+        font-family: Georgia, serif;
+      }
+      .tt {
+        color: #c8d4e0;
+        font-size: 15px;
+        line-height: 1.8;
+        margin-bottom: 24px;
+      }
+      .ta {
+        display: flex;
+        gap: 14px;
+        align-items: center;
+        padding-top: 20px;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+      }
+      .tav {
+        width: 44px;
+        height: 44px;
+        background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 800;
+        color: #fff;
+      }
+      .tn {
+        font-weight: 700;
+        font-size: 15px;
+        color: #fff;
+      }
+      .tr {
+        font-size: 13px;
+        color: #6a7a8a;
+      }
+      .faq {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+      .fi {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      }
+      .fq {
+        width: 100%;
+        padding: 26px 0;
+        background: transparent;
+        border: none;
+        color: #fff;
+        font-size: 17px;
+        font-weight: 600;
+        text-align: left;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 24px;
+        font-family: inherit;
+        transition: color 0.3s;
+      }
+      .fq:hover {
+        color: #3b82f6;
+      }
+      .fq span:last-child {
+        width: 32px;
+        height: 32px;
+        border: 1px solid rgba(59, 130, 246, 0.3);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #3b82f6;
+        font-size: 20px;
+        flex-shrink: 0;
+        transition: transform 0.3s;
+      }
+      .fi.op .fq span:last-child {
+        transform: rotate(45deg);
+      }
+      .fa {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.4s;
+      }
+      .fi.op .fa {
+        max-height: 300px;
+        padding-bottom: 24px;
+      }
+      .fa p {
+        color: #8a9aa8;
+        font-size: 15px;
+        line-height: 1.8;
+      }
+      .form-w {
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 24px;
+        padding: 50px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 60px;
+        align-items: start;
+      }
+      .fg {
+        margin-bottom: 18px;
+      }
+      .fg label {
+        display: block;
+        font-size: 13px;
+        color: #8a9aa8;
+        font-weight: 600;
+        margin-bottom: 8px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+      .fg input,
+      .fg textarea {
+        width: 100%;
+        padding: 14px 18px;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        color: #fff;
+        font-size: 15px;
+        font-family: inherit;
+        outline: none;
+        transition: border 0.3s;
+      }
+      .fg input:focus,
+      .fg textarea:focus {
+        border-color: #3b82f6;
+        background: rgba(59, 130, 246, 0.05);
+      }
+      .fg input::placeholder,
+      .fg textarea::placeholder {
+        color: #4a5a6a;
+      }
+      .fg textarea {
+        resize: vertical;
+        min-height: 80px;
+      }
+      .cb {
+        display: flex;
+        gap: 12px;
+        align-items: flex-start;
+        margin-bottom: 20px;
+        font-size: 13px;
+        color: #6a7a8a;
+      }
+      .cb input {
+        margin-top: 3px;
+        width: 18px;
+        height: 18px;
+        accent-color: #3b82f6;
+        flex-shrink: 0;
+      }
+      .cb a {
+        color: #3b82f6;
+      }
+      .fbtn {
+        display: flex;
+        width: 100%;
+        justify-content: center;
+      }
+      footer {
+        background: rgba(0, 0, 0, 0.5);
+        padding: 60px 0 28px;
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+        text-align: center;
+        color: #6a7a8a;
+        font-size: 14px;
+      }
+      footer a {
+        color: #3b82f6;
+        text-decoration: none;
+      }
+      @media (max-width: 900px) {
+        .hero-in,
+        .form-w {
+          grid-template-columns: 1fr;
+          gap: 40px;
+        }
+        h1 {
+          font-size: 36px;
+        }
+        .h2 {
+          font-size: 32px;
+        }
+        .cards,
+        .tgrid,
+        .steps,
+        .sg {
+          grid-template-columns: 1fr;
+        }
+        .sg {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 32px;
+        }
+        .photo {
+          max-width: 340px;
+          margin: 0 auto;
+        }
+        section {
+          padding: 70px 0;
+        }
+        .form-w {
+          padding: 28px 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <section class="hero">
+      <div class="c hero-in">
+        <div>
+          <div class="badge reveal">
+            <span class="dot"></span> Свободен для новых проектов
+          </div>
+          <h1 class="reveal d1">Помогаю новичкам начать и не бросить</h1>
+          <p class="sub reveal d2">
+            Без воды, без сложных схем. Только практика, поддержка и понятные
+            шаги. Первая консультация — бесплатно.
+          </p>
+          <div class="btns reveal d3">
+            <a href="#form" class="btn btn-p">Оставить заявку</a>
+            <a href="#about" class="btn btn-g">Узнать больше</a>
+          </div>
+          <div class="trust reveal d4">
+            <div class="ti"><b>5+</b><span>лет опыта</span></div>
+            <div class="ti"><b>120</b><span>учеников</span></div>
+            <div class="ti"><b>24/7</b><span>поддержка</span></div>
+          </div>
+        </div>
+        <div class="photo reveal-s d2">
+          <div class="mono">А</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="stat">
+      <div class="c sg">
+        <div class="reveal-s">
+          <div class="sn">50+</div>
+          <div class="sl">клиентов</div>
+        </div>
+        <div class="reveal-s d1">
+          <div class="sn">3</div>
+          <div class="sl">года опыта</div>
+        </div>
+        <div class="reveal-s d2">
+          <div class="sn">40</div>
+          <div class="sl">городов</div>
+        </div>
+        <div class="reveal-s d3">
+          <div class="sn">24/7</div>
+          <div class="sl">поддержка</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="c">
+        <div class="lbl reveal">Обо мне</div>
+        <h2 class="h2 reveal d1">Меня зовут <em>Алексей</em></h2>
+        <p class="ss reveal d2">
+          Начинал с нуля. Первые месяцы было тяжело, но я разобрался и построил
+          систему, которая работает.
+        </p>
+        <div class="cards">
+          <div class="card reveal">
+            <div class="icon">🎯</div>
+            <h3>Пошаговый план</h3>
+            <p>
+              Первые 30 дней расписаны по дням. Идёшь по шагам — не думаешь, что
+              делать дальше.
+            </p>
+          </div>
+          <div class="card reveal d1">
+            <div class="icon">👥</div>
+            <h3>Личный наставник</h3>
+            <p>
+              Я всегда на связи. Разбираю ошибки, отвечаю на вопросы, помогаю не
+              сдаться.
+            </p>
+          </div>
+          <div class="card reveal d2">
+            <div class="icon">📚</div>
+            <h3>Обучение с нуля</h3>
+            <p>
+              Материалы простым языком. Никаких сложных терминов — только
+              нужное.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section
+      style="
+        background: rgba(0, 0, 0, 0.3);
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      "
+    >
+      <div class="c">
+        <div class="lbl reveal">Процесс</div>
+        <h2 class="h2 reveal d1">Как это <em>работает</em></h2>
+        <p class="ss reveal d2">Четыре шага от заявки до результата</p>
+        <div class="steps">
+          <div class="step reveal">
+            <div class="snum">01</div>
+            <h4>Заявка</h4>
+            <p>Ты пишешь мне в Telegram или оставляешь заявку на сайте.</p>
+          </div>
+          <div class="step reveal d1">
+            <div class="snum">02</div>
+            <h4>Знакомство</h4>
+            <p>Отвечаю на вопросы, рассказываю о продукте и возможностях.</p>
+          </div>
+          <div class="step reveal d2">
+            <div class="snum">03</div>
+            <h4>Старт</h4>
+            <p>
+              Ты регистрируешься и получаешь доступ к обучению и наставнику.
+            </p>
+          </div>
+          <div class="step reveal d3">
+            <div class="snum">04</div>
+            <h4>Результат</h4>
+            <p>Начинаешь работать и выходишь на первый результат.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="c">
+        <div class="lbl reveal">Отзывы</div>
+        <h2 class="h2 reveal d1">Что говорят <em>клиенты</em></h2>
+        <p class="ss reveal d2">
+          Реальные истории людей, которые прошли этот путь
+        </p>
+        <div class="tgrid">
+          <div class="t reveal">
+            <div class="tq">"</div>
+            <p class="tt">
+              Пришёл без опыта, боялся. Через месяц вышел на первые деньги.
+              Наставник всегда на связи.
+            </p>
+            <div class="ta">
+              <div class="tav">А</div>
+              <div>
+                <div class="tn">Анна</div>
+                <div class="tr">Москва · 1 год</div>
+              </div>
+            </div>
+          </div>
+          <div class="t reveal d1">
+            <div class="tq">"</div>
+            <p class="tt">
+              Работал на заводе, искал подработку. Теперь у меня команда из 12
+              человек. Спасибо за поддержку.
+            </p>
+            <div class="ta">
+              <div class="tav">Д</div>
+              <div>
+                <div class="tn">Дмитрий</div>
+                <div class="tr">СПб · 2 года</div>
+              </div>
+            </div>
+          </div>
+          <div class="t reveal d2">
+            <div class="tq">"</div>
+            <p class="tt">
+              Долго не решалась. Но система реально работает, если не лениться.
+              За полгода — хороший результат.
+            </p>
+            <div class="ta">
+              <div class="tav">Е</div>
+              <div>
+                <div class="tn">Елена</div>
+                <div class="tr">Казань · 8 месяцев</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section
+      style="
+        background: rgba(0, 0, 0, 0.3);
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      "
+    >
+      <div class="c">
+        <div class="lbl reveal">FAQ</div>
+        <h2 class="h2 reveal d1">Частые <em>вопросы</em></h2>
+        <p class="ss reveal d2">Не нашёл ответ? Напиши в Telegram</p>
+        <div class="faq">
+          <div class="fi reveal">
+            <button class="fq">
+              <span>Нужен ли опыт?</span><span>+</span>
+            </button>
+            <div class="fa"><p>Нет. Всему научим с нуля.</p></div>
+          </div>
+          <div class="fi reveal d1">
+            <button class="fq">
+              <span>Сколько нужно вложить?</span><span>+</span>
+            </button>
+            <div class="fa">
+              <p>Стартовый набор от 3 000 ₽. Больше вкладывать не нужно.</p>
+            </div>
+          </div>
+          <div class="fi reveal d2">
+            <button class="fq">
+              <span>Сколько времени нужно уделять?</span><span>+</span>
+            </button>
+            <div class="fa">
+              <p>От 1 часа в день. Можно совмещать с работой.</p>
+            </div>
+          </div>
+          <div class="fi reveal d3">
+            <button class="fq">
+              <span>Как проходит работа?</span><span>+</span>
+            </button>
+            <div class="fa">
+              <p>Онлайн. Созвоны, чат, материалы. Всё в удобное время.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="form">
+      <div class="c">
+        <div class="form-w reveal-s">
+          <div>
+            <div class="lbl">Связаться</div>
+            <h2 class="h2" style="font-size: 38px">Оставить <em>заявку</em></h2>
+            <p class="ss" style="margin-bottom: 0">
+              Напиши мне — я свяжусь в течение дня и отвечу на все вопросы. Без
+              обязательств.
+            </p>
+          </div>
+          <form action="https://formspree.io/f/your_form_id" method="POST">
+            <div class="fg">
+              <label>Имя</label
+              ><input
+                type="text"
+                name="name"
+                placeholder="Как к тебе обращаться?"
+                required
+              />
+            </div>
+            <div class="fg">
+              <label>Telegram или телефон</label
+              ><input
+                type="text"
+                name="contact"
+                placeholder="@username"
+                required
+              />
+            </div>
+            <div class="fg">
+              <label>Комментарий</label
+              ><textarea
+                name="message"
+                placeholder="Коротко о себе..."
+              ></textarea>
+            </div>
+            <div class="cb">
+              <input type="checkbox" required id="c1" /><label for="c1"
+                >Согласен на обработку персональных данных и принимаю
+                <a href="/privacy.html">политику конфиденциальности</a></label
+              >
+            </div>
+            <button type="submit" class="btn btn-p fbtn">
+              Отправить заявку
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="c">
+        <p>© 2026 Алексей Петров. · <a href="/">На главную</a></p>
+      </div>
+    </footer>
+
+    <script>
+      const io = new IntersectionObserver(
+        (es) => {
+          es.forEach((e) => {
+            if (e.isIntersecting) {
+              e.target.classList.add("a");
+              io.unobserve(e.target);
+            }
+          });
+        },
+        { threshold: 0.12 },
+      );
+      document
+        .querySelectorAll(".reveal,.reveal-l,.reveal-r,.reveal-s")
+        .forEach((el) => io.observe(el));
+      document.querySelectorAll(".fq").forEach((b) => {
+        b.addEventListener("click", () => {
+          const i = b.parentElement;
+          const o = i.classList.contains("op");
+          document
+            .querySelectorAll(".fi")
+            .forEach((x) => x.classList.remove("op"));
+          if (!o) i.classList.add("op");
+        });
+      });
+    </script>
+  </body>
+</html>

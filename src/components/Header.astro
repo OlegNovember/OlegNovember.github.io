@@ -1,0 +1,179 @@
+<header class="header" id="header">
+    <div class="header-inner">
+        <a href="/" class="logo">
+            <span class="logo-mark">Г</span>
+            <span class="logo-text">Олег <b>Громов</b></span>
+        </a>
+        <nav class="nav">
+            <a href="#about">Обо мне</a>
+            <a href="#services">Услуги</a>
+            <a href="#portfolio">Портфолио</a>
+            <a href="#faq">FAQ</a>
+            <a href="#form" class="nav-cta">Связаться</a>
+        </nav>
+        <button class="burger" id="burger" aria-label="Меню">
+            <span></span><span></span><span></span>
+        </button>
+    </div>
+</header>
+
+<div class="mobile-menu" id="mobileMenu">
+    <a href="#about">Обо мне</a>
+    <a href="#services">Услуги</a>
+    <a href="#portfolio">Портфолио</a>
+    <a href="#faq">FAQ</a>
+    <a href="#form" class="nav-cta">Связаться</a>
+</div>
+
+<style>
+    .header {
+        position: fixed;
+        top: 0; left: 0; right: 0;
+        z-index: 100;
+        padding: 16px 0;
+        transition: all 0.4s;
+        background: rgba(10,14,20,0.6);
+        backdrop-filter: blur(20px) saturate(180%);
+        -webkit-backdrop-filter: blur(20px) saturate(180%);
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .header.scrolled {
+        padding: 10px 0;
+        background: rgba(10,14,20,0.85);
+        border-bottom-color: rgba(59,130,246,0.2);
+    }
+    .header.hidden { transform: translateY(-100%); }
+    .header-inner {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 32px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .logo {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        text-decoration: none;
+        color: #fff;
+        font-size: 17px;
+        font-weight: 500;
+    }
+    .logo-mark {
+        width: 36px; height: 36px;
+        background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 800;
+        font-size: 16px;
+        color: #fff;
+    }
+    .logo-text b { color: #3b82f6; font-weight: 700; }
+    .nav { display: flex; gap: 32px; align-items: center; }
+    .nav a {
+        color: #8a9aa8;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 500;
+        transition: color 0.2s;
+    }
+    .nav a:hover { color: #fff; }
+    .nav-cta {
+        padding: 10px 22px;
+        background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+        color: #fff !important;
+        border-radius: 10px;
+        font-weight: 600;
+    }
+    .nav-cta:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(59,130,246,0.4);
+    }
+    .burger {
+        display: none;
+        width: 40px; height: 40px;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+    }
+    .burger span {
+        display: block;
+        width: 22px; height: 2px;
+        background: #fff;
+        border-radius: 2px;
+        transition: all 0.3s;
+    }
+    .burger.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .burger.active span:nth-child(2) { opacity: 0; }
+    .burger.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .mobile-menu {
+        position: fixed;
+        inset: 0;
+        background: rgba(10,14,20,0.98);
+        backdrop-filter: blur(20px);
+        z-index: 99;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 32px;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s;
+    }
+    .mobile-menu.active { opacity: 1; pointer-events: all; }
+    .mobile-menu a {
+        color: #fff;
+        text-decoration: none;
+        font-size: 24px;
+        font-weight: 600;
+    }
+    @media (max-width: 1024px) {
+        .nav { display: none; }
+        .burger { display: flex; }
+    }
+    @media (max-width: 640px) {
+        .header-inner { padding: 0 20px; }
+    }
+</style>
+
+<script>
+    const header = document.getElementById('header');
+    const burger = document.getElementById('burger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    let lastScroll = 0;
+
+    window.addEventListener('scroll', () => {
+        const currentScroll = window.scrollY;
+        if (currentScroll > 80) header?.classList.add('scrolled');
+        else header?.classList.remove('scrolled');
+        
+        if (currentScroll > lastScroll && currentScroll > 500) {
+            header?.classList.add('hidden');
+        } else {
+            header?.classList.remove('hidden');
+        }
+        lastScroll = currentScroll;
+    }, { passive: true });
+
+    burger?.addEventListener('click', () => {
+        burger.classList.toggle('active');
+        mobileMenu?.classList.toggle('active');
+        document.body.style.overflow = mobileMenu?.classList.contains('active') ? 'hidden' : '';
+    });
+
+    mobileMenu?.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            burger?.classList.remove('active');
+            mobileMenu?.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+    });
+</script>

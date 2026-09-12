@@ -1,0 +1,1067 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Мария Соколова — Приватная практика</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        font-family: "Inter", sans-serif;
+        background: #0a0a0a;
+        color: #e8e2d5;
+        line-height: 1.7;
+        overflow-x: hidden;
+        font-weight: 300;
+      }
+      h1,
+      h2,
+      h3,
+      .serif {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-weight: 400;
+        letter-spacing: -0.5px;
+      }
+      .gold {
+        color: #c9a961;
+      }
+      .reveal,
+      .reveal-l,
+      .reveal-r,
+      .reveal-s {
+        opacity: 0;
+        transition:
+          opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1),
+          transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .reveal {
+        transform: translateY(60px);
+      }
+      .reveal-l {
+        transform: translateX(-80px);
+      }
+      .reveal-r {
+        transform: translateX(80px);
+      }
+      .reveal-s {
+        transform: scale(0.92);
+      }
+      .reveal.a,
+      .reveal-l.a,
+      .reveal-r.a,
+      .reveal-s.a {
+        opacity: 1;
+        transform: translate(0) scale(1);
+      }
+      .d1 {
+        transition-delay: 0.15s;
+      }
+      .d2 {
+        transition-delay: 0.3s;
+      }
+      .d3 {
+        transition-delay: 0.45s;
+      }
+      .hero {
+        padding: 180px 0 120px;
+        position: relative;
+        overflow: hidden;
+        background:
+          radial-gradient(
+            ellipse at top right,
+            rgba(201, 169, 97, 0.08),
+            transparent 50%
+          ),
+          radial-gradient(
+            ellipse at bottom left,
+            rgba(201, 169, 97, 0.05),
+            transparent 50%
+          ),
+          #0a0a0a;
+      }
+      .hero::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image:
+          linear-gradient(rgba(201, 169, 97, 0.03) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(201, 169, 97, 0.03) 1px, transparent 1px);
+        background-size: 80px 80px;
+      }
+      .c {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 32px;
+      }
+      .hero-in {
+        display: grid;
+        grid-template-columns: 1.15fr 0.85fr;
+        gap: 100px;
+        align-items: center;
+        position: relative;
+        z-index: 1;
+      }
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 11px;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: #c9a961;
+        margin-bottom: 32px;
+        font-weight: 500;
+      }
+      .gline {
+        display: inline-block;
+        width: 60px;
+        height: 1px;
+        background: #c9a961;
+        vertical-align: middle;
+      }
+      h1 {
+        font-size: 64px;
+        line-height: 1.05;
+        margin-bottom: 32px;
+        color: #f4efe3;
+      }
+      h1 em {
+        color: #c9a961;
+        font-style: italic;
+        font-weight: 300;
+      }
+      .sub {
+        font-size: 17px;
+        color: #a8a29a;
+        margin-bottom: 44px;
+        max-width: 520px;
+        line-height: 1.8;
+      }
+      .btn {
+        display: inline-block;
+        padding: 18px 42px;
+        background: #c9a961;
+        color: #0a0a0a;
+        font-size: 12px;
+        font-weight: 500;
+        letter-spacing: 2.5px;
+        text-transform: uppercase;
+        text-decoration: none;
+        border: none;
+        cursor: pointer;
+        transition: all 0.4s;
+        font-family: "Inter", sans-serif;
+      }
+      .btn:hover {
+        background: #e0bd72;
+        transform: translateY(-2px);
+        box-shadow: 0 20px 40px rgba(201, 169, 97, 0.25);
+      }
+      .btn-o {
+        background: transparent;
+        color: #c9a961;
+        border: 1px solid rgba(201, 169, 97, 0.4);
+      }
+      .btn-o:hover {
+        background: rgba(201, 169, 97, 0.08);
+        color: #c9a961;
+        box-shadow: none;
+      }
+      .btns {
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+      }
+      .photo-wrap {
+        position: relative;
+      }
+      .photo {
+        aspect-ratio: 4/5;
+        background:
+          linear-gradient(
+            160deg,
+            rgba(201, 169, 97, 0.15),
+            rgba(10, 10, 10, 0.9)
+          ),
+          radial-gradient(
+            circle at 30% 30%,
+            rgba(201, 169, 97, 0.2),
+            transparent 60%
+          );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        border: 1px solid rgba(201, 169, 97, 0.2);
+        position: relative;
+      }
+      .photo::before {
+        content: "";
+        position: absolute;
+        inset: 16px;
+        border: 1px solid rgba(201, 169, 97, 0.15);
+        pointer-events: none;
+      }
+      .mono {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 140px;
+        color: #c9a961;
+        font-style: italic;
+        font-weight: 300;
+        opacity: 0.5;
+      }
+      .deco {
+        position: absolute;
+        width: 40px;
+        height: 1px;
+        background: #c9a961;
+      }
+      .deco.d1 {
+        top: -20px;
+        left: -20px;
+      }
+      .deco.d1::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: -4px;
+        width: 1px;
+        height: 40px;
+        background: #c9a961;
+      }
+      .deco.d2 {
+        bottom: -20px;
+        right: -20px;
+      }
+      .deco.d2::after {
+        content: "";
+        position: absolute;
+        right: 0;
+        bottom: -4px;
+        width: 1px;
+        height: 40px;
+        background: #c9a961;
+      }
+      .marq {
+        padding: 28px 0;
+        overflow: hidden;
+        border-top: 1px solid rgba(201, 169, 97, 0.1);
+        border-bottom: 1px solid rgba(201, 169, 97, 0.1);
+      }
+      .mt {
+        display: flex;
+        gap: 60px;
+        animation: sc 40s linear infinite;
+        white-space: nowrap;
+        width: max-content;
+      }
+      .mt span {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 22px;
+        color: #6a6a60;
+        font-style: italic;
+        display: flex;
+        align-items: center;
+        gap: 60px;
+      }
+      .mt span::after {
+        content: "✦";
+        color: #c9a961;
+        font-style: normal;
+        font-size: 14px;
+      }
+      @keyframes sc {
+        0% {
+          transform: translateX(0);
+        }
+        100% {
+          transform: translateX(-50%);
+        }
+      }
+      .stat {
+        padding: 100px 0;
+        border-bottom: 1px solid rgba(201, 169, 97, 0.1);
+      }
+      .sg {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 40px;
+        text-align: center;
+      }
+      .sn {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 60px;
+        font-weight: 300;
+        color: #c9a961;
+        line-height: 1;
+        font-style: italic;
+        letter-spacing: -2px;
+      }
+      .sl {
+        font-size: 11px;
+        color: #6a6a60;
+        margin-top: 16px;
+        letter-spacing: 2.5px;
+        text-transform: uppercase;
+      }
+      section {
+        padding: 130px 0;
+      }
+      .lbl {
+        font-size: 11px;
+        color: #c9a961;
+        letter-spacing: 4px;
+        text-transform: uppercase;
+        text-align: center;
+        margin-bottom: 24px;
+        font-weight: 500;
+      }
+      .h2 {
+        font-size: 52px;
+        line-height: 1.15;
+        text-align: center;
+        color: #f4efe3;
+        margin-bottom: 20px;
+        font-weight: 300;
+      }
+      .h2 em {
+        color: #c9a961;
+        font-style: italic;
+      }
+      .ss {
+        text-align: center;
+        color: #a8a29a;
+        font-size: 16px;
+        margin-bottom: 80px;
+        max-width: 640px;
+        margin-left: auto;
+        margin-right: auto;
+        line-height: 1.8;
+      }
+      .bgrid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1px;
+        background: rgba(201, 169, 97, 0.12);
+        border: 1px solid rgba(201, 169, 97, 0.12);
+      }
+      .ben {
+        background: #0a0a0a;
+        padding: 50px 36px;
+        transition: background 0.5s;
+      }
+      .ben:hover {
+        background: #0f0f0d;
+      }
+      .bnum {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 14px;
+        color: #c9a961;
+        letter-spacing: 3px;
+        margin-bottom: 26px;
+        display: block;
+      }
+      .ben h4 {
+        font-size: 26px;
+        margin-bottom: 14px;
+        color: #f4efe3;
+      }
+      .ben h4 em {
+        color: #c9a961;
+        font-style: italic;
+      }
+      .ben p {
+        color: #8a857c;
+        font-size: 15px;
+        line-height: 1.8;
+      }
+      .bline {
+        width: 30px;
+        height: 1px;
+        background: #c9a961;
+        margin-top: 22px;
+        transition: width 0.5s;
+      }
+      .ben:hover .bline {
+        width: 60px;
+      }
+      .quote-sec {
+        background:
+          radial-gradient(
+            ellipse at center,
+            rgba(201, 169, 97, 0.08),
+            transparent 70%
+          ),
+          #0a0a0a;
+        padding: 150px 0;
+        text-align: center;
+        border-top: 1px solid rgba(201, 169, 97, 0.1);
+        border-bottom: 1px solid rgba(201, 169, 97, 0.1);
+      }
+      .quote {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 42px;
+        line-height: 1.4;
+        color: #f4efe3;
+        font-style: italic;
+        font-weight: 300;
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 0 32px;
+        position: relative;
+      }
+      .quote::before {
+        content: "“";
+        position: absolute;
+        top: -60px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 120px;
+        color: #c9a961;
+        opacity: 0.3;
+        font-style: normal;
+        line-height: 1;
+      }
+      .qa {
+        margin-top: 36px;
+        font-size: 12px;
+        color: #c9a961;
+        letter-spacing: 4px;
+        text-transform: uppercase;
+      }
+      .srv {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 32px;
+      }
+      .s {
+        background: linear-gradient(160deg, #111110, #0a0a0a);
+        padding: 50px 36px;
+        border: 1px solid rgba(201, 169, 97, 0.15);
+        transition: all 0.5s;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+      }
+      .s::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, #c9a961, transparent);
+        opacity: 0;
+        transition: opacity 0.5s;
+      }
+      .s:hover {
+        border-color: rgba(201, 169, 97, 0.5);
+        transform: translateY(-6px);
+      }
+      .s:hover::before {
+        opacity: 1;
+      }
+      .tier {
+        font-size: 11px;
+        color: #c9a961;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        margin-bottom: 22px;
+      }
+      .s h4 {
+        font-size: 28px;
+        margin-bottom: 18px;
+        color: #f4efe3;
+        line-height: 1.2;
+        font-weight: 300;
+      }
+      .s h4 em {
+        color: #c9a961;
+        font-style: italic;
+      }
+      .sdesc {
+        color: #8a857c;
+        font-size: 15px;
+        line-height: 1.8;
+        margin-bottom: 28px;
+        padding-bottom: 28px;
+        border-bottom: 1px solid rgba(201, 169, 97, 0.1);
+      }
+      .s ul {
+        list-style: none;
+        margin-bottom: 32px;
+        flex-grow: 1;
+      }
+      .s ul li {
+        padding: 10px 0 10px 24px;
+        position: relative;
+        color: #c8c2b5;
+        font-size: 14px;
+      }
+      .s ul li::before {
+        content: "—";
+        position: absolute;
+        left: 0;
+        color: #c9a961;
+      }
+      .sprice {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 36px;
+        color: #f4efe3;
+        font-style: italic;
+        font-weight: 300;
+        margin-bottom: 22px;
+      }
+      .tgrid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 32px;
+      }
+      .t {
+        background: linear-gradient(160deg, #111110, #0a0a0a);
+        padding: 44px 36px;
+        border: 1px solid rgba(201, 169, 97, 0.12);
+        transition: all 0.5s;
+      }
+      .t:hover {
+        border-color: rgba(201, 169, 97, 0.4);
+      }
+      .tq {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 70px;
+        color: #c9a961;
+        opacity: 0.3;
+        line-height: 0.5;
+        display: block;
+        margin-bottom: 16px;
+        font-style: italic;
+      }
+      .tt {
+        color: #c8c2b5;
+        font-size: 17px;
+        line-height: 1.9;
+        margin-bottom: 28px;
+        font-style: italic;
+        font-family: "Cormorant Garamond", Georgia, serif;
+      }
+      .ta {
+        padding-top: 22px;
+        border-top: 1px solid rgba(201, 169, 97, 0.1);
+      }
+      .tn {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 20px;
+        color: #f4efe3;
+        margin-bottom: 4px;
+      }
+      .tr {
+        font-size: 11px;
+        color: #c9a961;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+      }
+      .form-w {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 100px;
+        align-items: center;
+        max-width: 1100px;
+        margin: 0 auto;
+      }
+      .form-i .lbl {
+        text-align: left;
+      }
+      .form-i h3 {
+        font-size: 44px;
+        line-height: 1.2;
+        margin-bottom: 22px;
+        color: #f4efe3;
+        font-weight: 300;
+      }
+      .form-i h3 em {
+        color: #c9a961;
+        font-style: italic;
+      }
+      .form-i p {
+        color: #a8a29a;
+        margin-bottom: 30px;
+        font-size: 16px;
+        line-height: 1.9;
+      }
+      .form-i ul {
+        list-style: none;
+      }
+      .form-i li {
+        padding: 12px 0 12px 30px;
+        position: relative;
+        color: #c8c2b5;
+        font-size: 14px;
+      }
+      .form-i li::before {
+        content: "✦";
+        position: absolute;
+        left: 0;
+        color: #c9a961;
+        font-size: 12px;
+      }
+      .fg {
+        margin-bottom: 26px;
+      }
+      .fg label {
+        display: block;
+        font-size: 11px;
+        letter-spacing: 2.5px;
+        text-transform: uppercase;
+        color: #c9a961;
+        margin-bottom: 12px;
+        font-weight: 500;
+      }
+      .fg input,
+      .fg textarea {
+        width: 100%;
+        padding: 16px 0;
+        background: transparent;
+        border: none;
+        border-bottom: 1px solid rgba(201, 169, 97, 0.3);
+        font-size: 17px;
+        outline: none;
+        font-family: "Cormorant Garamond", Georgia, serif;
+        color: #f4efe3;
+        transition: border 0.3s;
+      }
+      .fg textarea {
+        resize: vertical;
+        min-height: 60px;
+      }
+      .fg input:focus,
+      .fg textarea:focus {
+        border-bottom-color: #c9a961;
+      }
+      .fg input::placeholder,
+      .fg textarea::placeholder {
+        color: #5a5a50;
+      }
+      .cb {
+        display: flex;
+        gap: 14px;
+        align-items: flex-start;
+        margin-bottom: 34px;
+        font-size: 12px;
+        color: #8a857c;
+        line-height: 1.7;
+      }
+      .cb input {
+        margin-top: 4px;
+        width: 16px;
+        height: 16px;
+        accent-color: #c9a961;
+        flex-shrink: 0;
+      }
+      .cb a {
+        color: #c9a961;
+      }
+      footer {
+        background: #060606;
+        padding: 80px 0 36px;
+        border-top: 1px solid rgba(201, 169, 97, 0.1);
+        text-align: center;
+      }
+      .f-logo {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 28px;
+        color: #f4efe3;
+        font-style: italic;
+        margin-bottom: 18px;
+      }
+      .f-logo span {
+        color: #c9a961;
+        font-style: normal;
+      }
+      footer p {
+        color: #6a6a60;
+        font-size: 13px;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+      }
+      footer a {
+        color: #c9a961;
+        text-decoration: none;
+      }
+      @media (max-width: 900px) {
+        .hero-in,
+        .form-w {
+          grid-template-columns: 1fr;
+          gap: 60px;
+        }
+        h1 {
+          font-size: 38px;
+        }
+        .h2 {
+          font-size: 32px;
+        }
+        .bgrid,
+        .srv,
+        .tgrid {
+          grid-template-columns: 1fr;
+        }
+        .sg {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 50px 20px;
+        }
+        .photo {
+          max-width: 340px;
+          margin: 0 auto;
+        }
+        section {
+          padding: 80px 0;
+        }
+        .quote {
+          font-size: 26px;
+        }
+        .form-i .lbl {
+          text-align: center;
+        }
+        .form-i h3 {
+          font-size: 32px;
+        }
+        .form-i {
+          text-align: center;
+        }
+        .form-i li {
+          padding-left: 0;
+        }
+        .form-i li::before {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <section class="hero">
+      <div class="c hero-in">
+        <div>
+          <div class="badge reveal">
+            <span class="gline"></span> Приватная практика · Москва
+          </div>
+          <h1 class="reveal d1">
+            Искусство быть <em>собой</em> без компромиссов
+          </h1>
+          <p class="sub reveal d2">
+            Индивидуальное сопровождение для женщин, которые выбирают глубину, а
+            не шум. Работаю с ограниченным числом клиенток в год.
+          </p>
+          <div class="btns reveal d3">
+            <a href="#form" class="btn">Запросить встречу</a>
+            <a href="#approach" class="btn btn-o">О подходе</a>
+          </div>
+        </div>
+        <div class="photo-wrap reveal-s d2">
+          <div class="deco d1"></div>
+          <div class="deco d2"></div>
+          <div class="photo"><div class="mono">M</div></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="marq">
+      <div class="mt">
+        <span>Индивидуальный подход</span><span>Полная конфиденциальность</span
+        ><span>Ограниченный поток</span><span>Персональное сопровождение</span>
+        <span>Индивидуальный подход</span><span>Полная конфиденциальность</span
+        ><span>Ограниченный поток</span><span>Персональное сопровождение</span>
+      </div>
+    </div>
+
+    <section class="stat">
+      <div class="c sg">
+        <div class="reveal-s">
+          <div class="sn">12+</div>
+          <div class="sl">лет практики</div>
+        </div>
+        <div class="reveal-s d1">
+          <div class="sn">200+</div>
+          <div class="sl">клиенток</div>
+        </div>
+        <div class="reveal-s d2">
+          <div class="sn">12</div>
+          <div class="sl">мест в год</div>
+        </div>
+        <div class="reveal-s d3">
+          <div class="sn">100%</div>
+          <div class="sl">конфиденциально</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="approach">
+      <div class="c">
+        <div class="lbl reveal">Подход</div>
+        <h2 class="h2 reveal d1">Пять принципов <em>работы</em></h2>
+        <p class="ss reveal d2">
+          Всё, что происходит между нами, остаётся между нами
+        </p>
+        <div class="bgrid">
+          <div class="ben reveal">
+            <span class="bnum">01</span>
+            <h4>Глубина, <em>а не скорость</em></h4>
+            <p>
+              Не работаем по шаблонам. Каждая встреча — разговор, который меняет
+              оптику.
+            </p>
+            <div class="bline"></div>
+          </div>
+          <div class="ben reveal d1">
+            <span class="bnum">02</span>
+            <h4>Полная <em>конфиденциальность</em></h4>
+            <p>
+              Никаких кейсов с именами, скриншотов и упоминаний. Всё остаётся в
+              кабинете.
+            </p>
+            <div class="bline"></div>
+          </div>
+          <div class="ben reveal d2">
+            <span class="bnum">03</span>
+            <h4>Индивидуальный <em>ритм</em></h4>
+            <p>
+              Я подстраиваюсь под твой график. Встречи в удобное время и в
+              удобном формате.
+            </p>
+            <div class="bline"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="quote-sec">
+      <div class="quote reveal">
+        Роскошь — это не вещи. Это право жить так, как ты выбираешь сама.
+        <div class="qa reveal d2">— Мария Соколова</div>
+      </div>
+    </section>
+
+    <section>
+      <div class="c">
+        <div class="lbl reveal">Форматы</div>
+        <h2 class="h2 reveal d1">Три способа <em>работать вместе</em></h2>
+        <p class="ss reveal d2">Каждый формат — отдельный ритм и глубина</p>
+        <div class="srv">
+          <div class="s reveal">
+            <div class="tier">Знакомство</div>
+            <h4>Первая <em>встреча</em></h4>
+            <p class="sdesc">
+              Разговор о том, где ты сейчас и куда хочешь прийти. Без
+              обязательств.
+            </p>
+            <ul>
+              <li>90 минут личной встречи</li>
+              <li>Онлайн или в кабинете</li>
+              <li>Разбор запроса</li>
+              <li>Честный взгляд на ситуацию</li>
+            </ul>
+            <div class="sprice">Бесплатно</div>
+            <a
+              href="#form"
+              class="btn btn-o"
+              style="display: block; text-align: center"
+              >Записаться</a
+            >
+          </div>
+          <div class="s reveal d1">
+            <div class="tier">Основной формат</div>
+            <h4>Программа <em>12 недель</em></h4>
+            <p class="sdesc">
+              Глубинная работа, которая меняет оптику и возвращает ясность.
+            </p>
+            <ul>
+              <li>12 индивидуальных сессий</li>
+              <li>Поддержка между встречами</li>
+              <li>Домашние практики</li>
+              <li>Работа с идентичностью</li>
+              <li>Полная конфиденциальность</li>
+            </ul>
+            <div class="sprice">По запросу</div>
+            <a
+              href="#form"
+              class="btn"
+              style="display: block; text-align: center"
+              >Запросить</a
+            >
+          </div>
+          <div class="s reveal d2">
+            <div class="tier">Приватный формат</div>
+            <h4>Сопровождение <em>год</em></h4>
+            <p class="sdesc">
+              Для тех, кому нужен постоянный партнёр на длинной дистанции.
+            </p>
+            <ul>
+              <li>Ежемесячные встречи</li>
+              <li>Доступ в любое время</li>
+              <li>Работа с командой и окружением</li>
+              <li>Выездные сессии</li>
+              <li>Максимальная вовлечённость</li>
+            </ul>
+            <div class="sprice">По запросу</div>
+            <a
+              href="#form"
+              class="btn btn-o"
+              style="display: block; text-align: center"
+              >Запросить</a
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section
+      style="
+        background: #060606;
+        border-top: 1px solid rgba(201, 169, 97, 0.1);
+        border-bottom: 1px solid rgba(201, 169, 97, 0.1);
+      "
+    >
+      <div class="c">
+        <div class="lbl reveal">Голоса</div>
+        <h2 class="h2 reveal d1">Что говорят <em>клиентки</em></h2>
+        <p class="ss reveal d2">
+          Все отзывы публикуются с письменного разрешения и без указания полных
+          имён
+        </p>
+        <div class="tgrid">
+          <div class="t reveal">
+            <span class="tq">"</span>
+            <p class="tt">
+              Пришла с ощущением, что всё правильно, но не моё. Через три месяца
+              впервые за годы почувствовала, что живу свою жизнь.
+            </p>
+            <div class="ta">
+              <div class="tn">Анна К.</div>
+              <div class="tr">Владелица бизнеса · Москва</div>
+            </div>
+          </div>
+          <div class="t reveal d1">
+            <span class="tq">"</span>
+            <p class="tt">
+              Мария умеет задавать неудобные вопросы так, что на них хочется
+              отвечать. Это честный разговор с собой через другого человека.
+            </p>
+            <div class="ta">
+              <div class="tn">Екатерина М.</div>
+              <div class="tr">Топ-менеджер · СПб</div>
+            </div>
+          </div>
+          <div class="t reveal d2">
+            <span class="tq">"</span>
+            <p class="tt">
+              Работали год. Я не изменила работу, не развелась, не уехала. Я
+              просто перестала врать себе. Это оказалось дороже любых перемен.
+            </p>
+            <div class="ta">
+              <div class="tn">Ольга В.</div>
+              <div class="tr">Врач · Казань</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="form">
+      <div class="c">
+        <div class="form-w">
+          <div class="form-i reveal-l">
+            <div class="lbl">Связаться</div>
+            <h3>Запросить <em>встречу</em></h3>
+            <p>
+              Напиши о себе пару слов. Я отвечу лично, в течение 24 часов. Всё,
+              что ты напишешь, останется между нами.
+            </p>
+            <ul>
+              <li>Первая встреча — бесплатно</li>
+              <li>Ответ в течение 24 часов</li>
+              <li>Полная конфиденциальность</li>
+              <li>Никаких рассылок и рекламы</li>
+            </ul>
+          </div>
+          <form
+            action="https://formspree.io/f/your_form_id"
+            method="POST"
+            class="reveal-r d1"
+          >
+            <div class="fg">
+              <label>Имя</label
+              ><input
+                type="text"
+                name="name"
+                placeholder="Как к тебе обращаться"
+                required
+              />
+            </div>
+            <div class="fg">
+              <label>Telegram или телефон</label
+              ><input
+                type="text"
+                name="contact"
+                placeholder="@username"
+                required
+              />
+            </div>
+            <div class="fg">
+              <label>Пара слов о себе</label
+              ><textarea
+                name="message"
+                placeholder="Что привело тебя сюда сейчас?"
+              ></textarea>
+            </div>
+            <div class="cb">
+              <input type="checkbox" required id="c3" /><label for="c3"
+                >Согласна на обработку персональных данных и принимаю
+                <a href="/privacy.html">политику конфиденциальности</a></label
+              >
+            </div>
+            <button
+              type="submit"
+              class="btn"
+              style="display: block; width: 100%"
+            >
+              Отправить запрос
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="c">
+        <div class="f-logo">Мария <span>Соколова</span></div>
+        <p>© 2026 · <a href="/">На главную</a></p>
+      </div>
+    </footer>
+
+    <script>
+      const io = new IntersectionObserver(
+        (es) => {
+          es.forEach((e) => {
+            if (e.isIntersecting) {
+              e.target.classList.add("a");
+              io.unobserve(e.target);
+            }
+          });
+        },
+        { threshold: 0.12 },
+      );
+      document
+        .querySelectorAll(".reveal,.reveal-l,.reveal-r,.reveal-s")
+        .forEach((el) => io.observe(el));
+    </script>
+  </body>
+</html>
