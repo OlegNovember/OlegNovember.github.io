@@ -1,0 +1,190 @@
+---
+const rows = [
+    { label: 'Цена', me: 'от 9 000 ₽', freelancer: 'от 15 000 ₽', studio: 'от 50 000 ₽' },
+    { label: 'Срок', me: '3 дня', freelancer: '1–2 недели', studio: '3–4 недели' },
+    { label: 'Общение', me: 'Напрямую', freelancer: 'Через чат', studio: 'Через менеджера' },
+    { label: 'Правки', me: 'Безлимит 14 дней', freelancer: 'По договорённости', studio: 'За отдельную плату' },
+    { label: 'Хостинг и домен', me: 'Включены', freelancer: 'За доплату', studio: 'За доплату' },
+    { label: 'Ответ на вопросы', me: 'В течение часа', freelancer: 'Когда свободен', studio: 'В рабочие часы' },
+    { label: 'Кто отвечает за результат', me: 'Лично я', freelancer: 'Он же', studio: 'Менеджер' }
+];
+---
+
+<section class="section section-dark comparison-section">
+    <div class="container">
+        <div class="section-label reveal">Сравнение</div>
+        <h2 class="section-title reveal d-1">Почему <em>я</em>, а не другие</h2>
+        <p class="section-sub reveal d-2">Честное сравнение трёх форматов работы</p>
+
+        <div class="comparison-wrap reveal d-3">
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th class="highlight">
+                            <div class="col-icon">Г</div>
+                            <div class="col-title">Олег Громов</div>
+                            <div class="col-sub">Со мной</div>
+                        </th>
+                        <th>
+                            <div class="col-title">Фрилансер</div>
+                            <div class="col-sub">На бирже</div>
+                        </th>
+                        <th>
+                            <div class="col-title">Студия</div>
+                            <div class="col-sub">Агентство</div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {rows.map(row => (
+                        <tr>
+                            <td class="row-label">{row.label}</td>
+                            <td class="highlight">
+                                <span class="check">✓</span> {row.me}
+                            </td>
+                            <td>{row.freelancer}</td>
+                            <td>{row.studio}</td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="comparison-cta reveal d-4">
+            <a href="#form" class="btn btn-primary">
+                <span>Заказать у меня</span>
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+        </div>
+    </div>
+</section>
+
+<style>
+    .comparison-section {
+        position: relative;
+        overflow: hidden;
+    }
+    .comparison-section::before {
+        content: "";
+        position: absolute;
+        top: 50%; left: 50%;
+        transform: translate(-50%, -50%);
+        width: 800px; height: 800px;
+        background: radial-gradient(circle, rgba(59,130,246,0.08), transparent 70%);
+        pointer-events: none;
+    }
+    .comparison-wrap {
+        position: relative;
+        overflow-x: auto;
+        border-radius: 24px;
+        border: 1px solid rgba(255,255,255,0.08);
+        background: rgba(255,255,255,0.02);
+    }
+    .comparison-table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 720px;
+    }
+    .comparison-table th,
+    .comparison-table td {
+        padding: 24px 28px;
+        text-align: left;
+        font-size: 15px;
+        border-bottom: 1px solid rgba(255,255,255,0.06);
+        vertical-align: middle;
+    }
+    .comparison-table tbody tr:last-child td {
+        border-bottom: none;
+    }
+    .comparison-table thead th {
+        background: rgba(255,255,255,0.02);
+        color: #8a9aa8;
+        font-weight: 500;
+        font-size: 13px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        padding-top: 32px;
+        padding-bottom: 32px;
+    }
+    .comparison-table thead th.highlight {
+        background: linear-gradient(180deg, rgba(59,130,246,0.15), rgba(139,92,246,0.08));
+        position: relative;
+    }
+    .comparison-table thead th.highlight::after {
+        content: "";
+        position: absolute;
+        top: 0; left: 0; right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+    }
+    .col-icon {
+        width: 44px; height: 44px;
+        background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 800;
+        font-size: 18px;
+        color: #fff;
+        margin-bottom: 14px;
+    }
+    .col-title {
+        font-size: 16px;
+        font-weight: 700;
+        color: #fff;
+        text-transform: none;
+        letter-spacing: 0;
+        margin-bottom: 4px;
+    }
+    .col-sub {
+        font-size: 12px;
+        color: #6a7a8a;
+        text-transform: none;
+        letter-spacing: 0;
+    }
+    .row-label {
+        color: #8a9aa8;
+        font-weight: 500;
+    }
+    .comparison-table td.highlight {
+        background: rgba(59,130,246,0.06);
+        color: #fff;
+        font-weight: 600;
+        border-left: 1px solid rgba(59,130,246,0.2);
+        border-right: 1px solid rgba(59,130,246,0.2);
+        position: relative;
+    }
+    .comparison-table tbody tr:last-child td.highlight {
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+    .comparison-table tbody tr:hover td {
+        background: rgba(255,255,255,0.02);
+    }
+    .comparison-table tbody tr:hover td.highlight {
+        background: rgba(59,130,246,0.1);
+    }
+    .check {
+        color: #22c55e;
+        font-weight: 800;
+        margin-right: 6px;
+    }
+    .comparison-cta {
+        text-align: center;
+        margin-top: 48px;
+    }
+    @media (max-width: 900px) {
+        .comparison-table th,
+        .comparison-table td {
+            padding: 18px 16px;
+            font-size: 14px;
+        }
+        .col-icon {
+            width: 36px; height: 36px;
+            font-size: 15px;
+        }
+        .col-title { font-size: 14px; }
+    }
+</style>
