@@ -32,8 +32,10 @@ const themes = [
             <div class="controls">
                 <div class="control-group">
                     <div class="control-title">
-                        <span>Блоки</span>
-                        <span class="control-hint">Hero, О себе, Форма — всегда включены</span>
+                      <span>Блоки</span>
+                      <a href="/guide" class="guide-link" target="_blank">
+                       Не знаешь, что выбрать? Гид по блокам →
+                     </a>
                     </div>
                     <div class="blocks-grid">
                         {blocks.map(b => (
@@ -102,6 +104,15 @@ const themes = [
                     <span class="preview-info-item">⚡ Быстрый</span>
                     <span class="preview-info-item">🎨 Твой стиль</span>
                 </div>
+                <div class="preview-hint">↓ Прокрути превью, чтобы увидеть все блоки</div>
+            </div>
+        </div>
+
+        <!-- ПРИМЕЧАНИЕ -->
+        <div class="constructor-note reveal d-3">
+            <div class="note-icon">✨</div>
+            <div class="note-text">
+                <b>Это базовый набор.</b> В реальном проекте можно добавить любые блоки — блог, калькулятор, интеграции, автоворонки — и подобрать палитру под твой бренд. Покажу, как это будет выглядеть, ещё до начала работы.
             </div>
         </div>
 
@@ -254,7 +265,7 @@ const themes = [
     .preview-url { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #6a7a8a; }
 
     .preview-body {
-        height: 520px;
+        height: 600px;
         overflow-y: auto;
         transition: background 0.4s;
     }
@@ -263,10 +274,55 @@ const themes = [
 
     .preview-info { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
     .preview-info-item { font-size: 12px; color: #6a7a8a; }
+    .preview-hint {
+        text-align: center;
+        font-size: 11px;
+        color: #4a5a6a;
+        letter-spacing: 1px;
+        margin-top: 4px;
+    }
+
+    /* ПРИМЕЧАНИЕ */
+    .constructor-note {
+        display: flex;
+        gap: 18px;
+        align-items: flex-start;
+        padding: 24px 28px;
+        margin-top: 32px;
+        background: linear-gradient(135deg, rgba(139,92,246,0.08), rgba(59,130,246,0.05));
+        border: 1px solid rgba(139,92,246,0.2);
+        border-radius: 18px;
+        position: relative;
+        overflow: hidden;
+    }
+    .constructor-note::before {
+        content: "";
+        position: absolute;
+        top: -50%; right: -10%;
+        width: 200px; height: 200px;
+        background: radial-gradient(circle, rgba(139,92,246,0.15), transparent 70%);
+        border-radius: 50%;
+        pointer-events: none;
+    }
+    .note-icon {
+        font-size: 24px;
+        flex-shrink: 0;
+        margin-top: 2px;
+    }
+    .note-text {
+        color: #c8d4e0;
+        font-size: 14px;
+        line-height: 1.7;
+        position: relative;
+    }
+    .note-text b {
+        color: #fff;
+        font-weight: 700;
+    }
 
     /* ИТОГ */
     .totals {
-        margin-top: 56px;
+        margin-top: 32px;
         display: flex; align-items: center; justify-content: space-between;
         gap: 32px; padding: 32px 40px;
         background: linear-gradient(135deg, rgba(59,130,246,0.08), rgba(139,92,246,0.08));
@@ -283,16 +339,27 @@ const themes = [
     }
     .total-note { font-size: 13px; color: #6a7a8a; }
 
+    .guide-link {
+    font-size: 12px;
+    color: #3b82f6;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s;
+    text-align: right;
+}
+.guide-link:hover { color: #8b5cf6; }
+
     @media (max-width: 1024px) {
         .constructor { grid-template-columns: 1fr; gap: 40px; }
         .preview { position: static; }
-        .preview-body { height: 420px; }
+        .preview-body { height: 480px; }
     }
     @media (max-width: 640px) {
         .blocks-grid { grid-template-columns: 1fr; }
         .themes-grid { grid-template-columns: repeat(3, 1fr); }
         .totals { padding: 24px 20px; }
         .total-price { font-size: 32px; }
+        .constructor-note { padding: 20px 18px; gap: 14px; }
     }
 </style>
 
@@ -327,29 +394,29 @@ const themes = [
     };
 
     // ============ БЛОКИ ПРЕВЬЮ ============
-    const blockRenderers = {
+    const blockRenderers: Record<string, () => string> = {
         hero: () => `
-            <div style="padding:40px 28px;background:linear-gradient(135deg,${T.color},${T.card});text-align:center;border-bottom:1px solid ${T.accent}20">
-                <div style="width:70px;height:70px;border-radius:50%;background:linear-gradient(135deg,${T.accent},${T.accent}99);margin:0 auto 16px;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:800;color:#fff;font-family:Inter,sans-serif">И</div>
-                <div style="font-size:22px;font-weight:800;color:${T.text};margin-bottom:8px;font-family:Inter,sans-serif;line-height:1.2">Иван Иванов</div>
-                <div style="font-size:13px;color:${T.muted};margin-bottom:20px;font-family:Inter,sans-serif">Помогаю начать с нуля</div>
-                <div style="display:inline-block;padding:10px 24px;background:${T.accent};color:#fff;border-radius:8px;font-size:13px;font-weight:700;font-family:Inter,sans-serif">Написать в Telegram</div>
+            <div style="padding:32px 22px;background:linear-gradient(135deg,${T.color},${T.card});text-align:center;border-bottom:1px solid ${T.accent}20">
+                <div style="width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,${T.accent},${T.accent}99);margin:0 auto 14px;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:800;color:#fff;font-family:Inter,sans-serif">И</div>
+                <div style="font-size:20px;font-weight:800;color:${T.text};margin-bottom:6px;font-family:Inter,sans-serif;line-height:1.2">Иван Иванов</div>
+                <div style="font-size:12px;color:${T.muted};margin-bottom:16px;font-family:Inter,sans-serif">Помогаю начать с нуля</div>
+                <div style="display:inline-block;padding:9px 22px;background:${T.accent};color:#fff;border-radius:8px;font-size:12px;font-weight:700;font-family:Inter,sans-serif">Написать в Telegram</div>
             </div>
         `,
         about: () => `
-            <div style="padding:32px 28px;background:${T.card};border-bottom:1px solid ${T.accent}15">
-                <div style="font-size:11px;color:${T.accent};text-transform:uppercase;letter-spacing:2px;font-weight:700;margin-bottom:12px;font-family:Inter,sans-serif">Обо мне</div>
-                <div style="font-size:16px;font-weight:700;color:${T.text};margin-bottom:10px;font-family:Inter,sans-serif">Меня зовут Иван</div>
-                <div style="font-size:13px;color:${T.muted};line-height:1.6;font-family:Inter,sans-serif">3 года в профессии. Начинал с нуля, без связей и бюджета. Сейчас помогаю новичкам пройти путь быстрее.</div>
+            <div style="padding:22px;background:${T.card};border-bottom:1px solid ${T.accent}15">
+                <div style="font-size:11px;color:${T.accent};text-transform:uppercase;letter-spacing:2px;font-weight:700;margin-bottom:10px;font-family:Inter,sans-serif">Обо мне</div>
+                <div style="font-size:15px;font-weight:700;color:${T.text};margin-bottom:8px;font-family:Inter,sans-serif">Меня зовут Иван</div>
+                <div style="font-size:12px;color:${T.muted};line-height:1.5;font-family:Inter,sans-serif">3 года в профессии. Начинал с нуля, без связей и бюджета. Сейчас помогаю новичкам пройти путь быстрее.</div>
             </div>
         `,
         services: () => `
-            <div style="padding:32px 28px;background:${T.color};border-bottom:1px solid ${T.accent}15">
-                <div style="font-size:11px;color:${T.accent};text-transform:uppercase;letter-spacing:2px;font-weight:700;margin-bottom:16px;font-family:Inter,sans-serif">Услуги</div>
+            <div style="padding:22px;background:${T.color};border-bottom:1px solid ${T.accent}15">
+                <div style="font-size:11px;color:${T.accent};text-transform:uppercase;letter-spacing:2px;font-weight:700;margin-bottom:12px;font-family:Inter,sans-serif">Услуги</div>
                 <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
                     ${['🎯','👥','📚'].map((icon,i) => `
-                        <div style="padding:14px 10px;background:${T.card};border-radius:10px;text-align:center;border:1px solid ${T.accent}20">
-                            <div style="font-size:20px;margin-bottom:8px">${icon}</div>
+                        <div style="padding:12px 8px;background:${T.card};border-radius:10px;text-align:center;border:1px solid ${T.accent}20">
+                            <div style="font-size:18px;margin-bottom:6px">${icon}</div>
                             <div style="font-size:11px;font-weight:700;color:${T.text};font-family:Inter,sans-serif">${['План','Наставник','Обучение'][i]}</div>
                         </div>
                     `).join('')}
@@ -357,8 +424,8 @@ const themes = [
             </div>
         `,
         portfolio: () => `
-            <div style="padding:32px 28px;background:${T.card};border-bottom:1px solid ${T.accent}15">
-                <div style="font-size:11px;color:${T.accent};text-transform:uppercase;letter-spacing:2px;font-weight:700;margin-bottom:16px;font-family:Inter,sans-serif">Портфолио</div>
+            <div style="padding:22px;background:${T.card};border-bottom:1px solid ${T.accent}15">
+                <div style="font-size:11px;color:${T.accent};text-transform:uppercase;letter-spacing:2px;font-weight:700;margin-bottom:12px;font-family:Inter,sans-serif">Портфолио</div>
                 <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px">
                     <div style="aspect-ratio:16/10;background:linear-gradient(135deg,${T.accent}40,${T.accent}15);border-radius:8px;display:flex;align-items:center;justify-content:center;color:${T.text};font-size:11px;font-weight:700;font-family:Inter,sans-serif">Работа 1</div>
                     <div style="aspect-ratio:16/10;background:linear-gradient(135deg,${T.accent}40,${T.accent}15);border-radius:8px;display:flex;align-items:center;justify-content:center;color:${T.text};font-size:11px;font-weight:700;font-family:Inter,sans-serif">Работа 2</div>
@@ -366,48 +433,48 @@ const themes = [
             </div>
         `,
         reviews: () => `
-            <div style="padding:32px 28px;background:${T.color};border-bottom:1px solid ${T.accent}15">
-                <div style="font-size:11px;color:${T.accent};text-transform:uppercase;letter-spacing:2px;font-weight:700;margin-bottom:16px;font-family:Inter,sans-serif">Отзывы</div>
-                <div style="padding:14px;background:${T.card};border-radius:10px;border-left:3px solid ${T.accent}">
+            <div style="padding:22px;background:${T.color};border-bottom:1px solid ${T.accent}15">
+                <div style="font-size:11px;color:${T.accent};text-transform:uppercase;letter-spacing:2px;font-weight:700;margin-bottom:12px;font-family:Inter,sans-serif">Отзывы</div>
+                <div style="padding:12px;background:${T.card};border-radius:10px;border-left:3px solid ${T.accent}">
                     <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
-                        <div style="width:28px;height:28px;border-radius:50%;background:${T.accent};display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;font-weight:700;font-family:Inter,sans-serif">А</div>
+                        <div style="width:26px;height:26px;border-radius:50%;background:${T.accent};display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700;font-family:Inter,sans-serif">А</div>
                         <div>
                             <div style="font-size:12px;font-weight:700;color:${T.text};font-family:Inter,sans-serif">Анна</div>
                             <div style="font-size:10px;color:${T.muted};font-family:Inter,sans-serif">Москва · ⭐⭐⭐⭐⭐</div>
                         </div>
                     </div>
-                    <div style="font-size:12px;color:${T.muted};line-height:1.5;font-family:Inter,sans-serif;font-style:italic">"Пришла без опыта. Через месяц вышла на первые деньги."</div>
+                    <div style="font-size:11px;color:${T.muted};line-height:1.5;font-family:Inter,sans-serif;font-style:italic">"Пришла без опыта. Через месяц вышла на первые деньги."</div>
                 </div>
             </div>
         `,
         pricing: () => `
-            <div style="padding:32px 28px;background:${T.card};border-bottom:1px solid ${T.accent}15">
-                <div style="font-size:11px;color:${T.accent};text-transform:uppercase;letter-spacing:2px;font-weight:700;margin-bottom:16px;font-family:Inter,sans-serif">Тарифы</div>
+            <div style="padding:22px;background:${T.card};border-bottom:1px solid ${T.accent}15">
+                <div style="font-size:11px;color:${T.accent};text-transform:uppercase;letter-spacing:2px;font-weight:700;margin-bottom:12px;font-family:Inter,sans-serif">Тарифы</div>
                 <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px">
                     ${[1,2,3].map(i => `
-                        <div style="padding:12px 8px;background:${T.color};border-radius:8px;text-align:center;border:1px solid ${i===2?T.accent+'60':T.accent+'20'}">
+                        <div style="padding:10px 6px;background:${T.color};border-radius:8px;text-align:center;border:1px solid ${i===2?T.accent+'60':T.accent+'20'}">
                             <div style="font-size:9px;color:${T.muted};text-transform:uppercase;letter-spacing:1px;font-family:Inter,sans-serif">${['Старт','Хит','Про'][i-1]}</div>
-                            <div style="font-size:14px;font-weight:800;color:${i===2?T.accent:T.text};margin-top:4px;font-family:Inter,sans-serif">${['3к','6к','12к'][i-1]}</div>
+                            <div style="font-size:13px;font-weight:800;color:${i===2?T.accent:T.text};margin-top:4px;font-family:Inter,sans-serif">${['3к','6к','12к'][i-1]}</div>
                         </div>
                     `).join('')}
                 </div>
             </div>
         `,
         gallery: () => `
-            <div style="padding:32px 28px;background:${T.color};border-bottom:1px solid ${T.accent}15">
-                <div style="font-size:11px;color:${T.accent};text-transform:uppercase;letter-spacing:2px;font-weight:700;margin-bottom:16px;font-family:Inter,sans-serif">Галерея</div>
+            <div style="padding:22px;background:${T.color};border-bottom:1px solid ${T.accent}15">
+                <div style="font-size:11px;color:${T.accent};text-transform:uppercase;letter-spacing:2px;font-weight:700;margin-bottom:12px;font-family:Inter,sans-serif">Галерея</div>
                 <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px">
                     ${[1,2,3,4,5,6].map(i => `
-                        <div style="aspect-ratio:1;background:linear-gradient(135deg,${T.accent}30,${T.accent}10);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:16px">📷</div>
+                        <div style="aspect-ratio:1;background:linear-gradient(135deg,${T.accent}30,${T.accent}10);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:14px">📷</div>
                     `).join('')}
                 </div>
             </div>
         `,
         faq: () => `
-            <div style="padding:32px 28px;background:${T.card};border-bottom:1px solid ${T.accent}15">
-                <div style="font-size:11px;color:${T.accent};text-transform:uppercase;letter-spacing:2px;font-weight:700;margin-bottom:16px;font-family:Inter,sans-serif">FAQ</div>
+            <div style="padding:22px;background:${T.card};border-bottom:1px solid ${T.accent}15">
+                <div style="font-size:11px;color:${T.accent};text-transform:uppercase;letter-spacing:2px;font-weight:700;margin-bottom:12px;font-family:Inter,sans-serif">FAQ</div>
                 ${['Нужен ли опыт?', 'Сколько времени?', 'Как оплата?'].map(q => `
-                    <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid ${T.accent}15">
+                    <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid ${T.accent}15">
                         <div style="font-size:12px;color:${T.text};font-family:Inter,sans-serif;font-weight:600">${q}</div>
                         <div style="color:${T.accent};font-size:16px;font-weight:300">+</div>
                     </div>
@@ -415,16 +482,16 @@ const themes = [
             </div>
         `,
         form: () => `
-            <div style="padding:32px 28px;background:linear-gradient(135deg,${T.color},${T.card});border-bottom:1px solid ${T.accent}15">
-                <div style="font-size:11px;color:${T.accent};text-transform:uppercase;letter-spacing:2px;font-weight:700;margin-bottom:16px;font-family:Inter,sans-serif">Заявка</div>
+            <div style="padding:22px;background:linear-gradient(135deg,${T.color},${T.card});border-bottom:1px solid ${T.accent}15">
+                <div style="font-size:11px;color:${T.accent};text-transform:uppercase;letter-spacing:2px;font-weight:700;margin-bottom:12px;font-family:Inter,sans-serif">Заявка</div>
                 <div style="margin-bottom:8px;padding:10px 14px;background:${T.card};border:1px solid ${T.accent}30;border-radius:8px;font-size:12px;color:${T.muted};font-family:Inter,sans-serif">Имя</div>
-                <div style="margin-bottom:12px;padding:10px 14px;background:${T.card};border:1px solid ${T.accent}30;border-radius:8px;font-size:12px;color:${T.muted};font-family:Inter,sans-serif">Telegram</div>
-                <div style="padding:12px;background:${T.accent};color:#fff;border-radius:8px;text-align:center;font-size:12px;font-weight:700;font-family:Inter,sans-serif">Отправить</div>
+                <div style="margin-bottom:10px;padding:10px 14px;background:${T.card};border:1px solid ${T.accent}30;border-radius:8px;font-size:12px;color:${T.muted};font-family:Inter,sans-serif">Telegram</div>
+                <div style="padding:11px;background:${T.accent};color:#fff;border-radius:8px;text-align:center;font-size:12px;font-weight:700;font-family:Inter,sans-serif">Отправить</div>
             </div>
         `,
         contacts: () => `
-            <div style="padding:28px;background:${T.color};text-align:center">
-                <div style="display:inline-flex;align-items:center;gap:8px;padding:10px 20px;background:${T.accent}15;border:1px solid ${T.accent}40;border-radius:50px;font-size:12px;color:${T.accent};font-weight:700;font-family:Inter,sans-serif">
+            <div style="padding:22px;background:${T.color};text-align:center">
+                <div style="display:inline-flex;align-items:center;gap:8px;padding:9px 18px;background:${T.accent}15;border:1px solid ${T.accent}40;border-radius:50px;font-size:12px;color:${T.accent};font-weight:700;font-family:Inter,sans-serif">
                     ✈ @your_telegram
                 </div>
             </div>
@@ -517,6 +584,4 @@ const themes = [
             serviceSelect.value = 'Лендинг — 9 000 ₽';
         }
     });
-</script>git add .
-git commit -m "Make constructor preview realistic"
-git push
+</script>
