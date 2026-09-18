@@ -3,9 +3,12 @@
         <div class="footer-grid">
             <div class="footer-col">
                 <div class="footer-logo">
-                    <span class="logo-mark">Г</span>
-                    <span>Олег <b>Громов</b></span>
-                </div>
+    <picture>
+    <source srcset="/images/logo.webp" type="image/webp" />
+    <img src="/images/logo.png" alt="Олег Громов" class="logo-mark" width="72" height="72" />
+</picture>
+    <span>Олег <b>Громов</b></span>
+</div>
                 <p>Вебмастер. Делаю лендинги, которые превращают трафик в заявки. Работаю по всей России.</p>
             </div>
             <div class="footer-col">
@@ -57,20 +60,15 @@
         gap: 12px;
         font-size: 18px;
         font-weight: 500;
-        margin-bottom: 20px;
+        /* margin-bottom: 20px; */
     }
     .footer-logo b { color: #3b82f6; }
     .logo-mark {
-        width: 36px; height: 36px;
-        background: linear-gradient(135deg, #3b82f6, #8b5cf6);
-        border-radius: 10px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: 800;
-        font-size: 16px;
-        color: #fff;
-    }
+    width: 72px;
+    height: 72px;
+    display: block;
+    object-fit: contain;
+}
     .footer-col p {
         color: #6a7a8a;
         font-size: 14px;

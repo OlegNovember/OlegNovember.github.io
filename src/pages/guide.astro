@@ -19,10 +19,7 @@ import FixedCta from '../components/FixedCta.astro';
             <p class="guide-sub">
                 Разбираю 12 блоков, из которых собирается лендинг. Что это, зачем, кому подходит — на примере наставницы Ларисы Морозовой.
             </p>
-            <a href="/larisa" target="_blank" class="btn-preview-larisa">
-                <span>Посмотреть сайт Ларисы целиком</span>
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </a>
+            
         </div>
     </section>
 
@@ -30,9 +27,13 @@ import FixedCta from '../components/FixedCta.astro';
         <div class="container">
             <div class="guide-layout">
                 <aside class="guide-menu" id="guideMenu">
-                    <div class="menu-title">Блоки</div>
-                    <div class="menu-list" id="menuList"></div>
-                </aside>
+    <div class="menu-title">Блоки</div>
+    <div class="menu-list" id="menuList"></div>
+    <a href="/larisa" target="_blank" class="btn-preview-larisa">
+        <span>Посмотреть сайт Ларисы целиком</span>
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+</aside>
                 <div class="guide-content" id="guideContent"></div>
             </div>
         </div>
@@ -569,37 +570,52 @@ import FixedCta from '../components/FixedCta.astro';
             display: flex;
             gap: 24px;
             flex-wrap: wrap;
-            margin-bottom: 28px;
+            margin-bottom: 15px;
         }
         .back-link {
-            display: inline-block;
-            color: #8a9aa8;
-            text-decoration: none;
-            font-size: 14px;
-            transition: color 0.2s;
-        }
-        .back-link:hover { color: #3b82f6; }
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 50px;
+    color: #c8d4e0;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.25s;
+    backdrop-filter: blur(12px);
+}
+.back-link:hover {
+    background: rgba(59,130,246,0.1);
+    border-color: rgba(59,130,246,0.5);
+    color: #fff;
+    transform: translateY(-2px);
+}
         .btn-preview-larisa {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            margin-top: 32px;
-            padding: 16px 32px;
-            background: linear-gradient(135deg, #d98b8b, #c67070);
-            color: #fff;
-            border-radius: 50px;
-            font-size: 15px;
-            font-weight: 600;
-            text-decoration: none;
-            box-shadow: 0 8px 24px rgba(217,139,139,0.35);
-            transition: all 0.3s;
-        }
-        .btn-preview-larisa:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 16px 40px rgba(217,139,139,0.5);
-        }
-        .btn-preview-larisa svg { transition: transform 0.3s; }
-        .btn-preview-larisa:hover svg { transform: translateX(4px); }
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 20px;
+    padding: 14px 20px;
+    background: linear-gradient(135deg, #d98b8b, #c67070);
+    color: #fff;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    box-shadow: 0 8px 20px rgba(217,139,139,0.3);
+    transition: all 0.3s;
+    text-align: center;
+}
+.btn-preview-larisa:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 32px rgba(217,139,139,0.5);
+}
+.btn-preview-larisa svg { transition: transform 0.3s; }
+.btn-preview-larisa:hover svg { transform: translateX(3px); }
         .guide-title {
             font-size: 56px;
             font-weight: 900;

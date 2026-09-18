@@ -1,16 +1,19 @@
 <header class="header" id="header">
     <div class="header-inner">
         <a href="/" class="logo">
-            <span class="logo-mark">Г</span>
-            <span class="logo-text">Олег <b>Громов</b></span>
-        </a>
+    <picture>
+    <source srcset="/images/logo.webp" type="image/webp" />
+    <img src="/images/logo.png" alt="Олег Громов" class="logo-mark" width="72" height="72" />
+</picture>
+    <span class="logo-text">Олег <b>Громов</b></span>
+</a>
         <nav class="nav">
-            <a href="#about">Обо мне</a>
-            <a href="#services">Услуги</a>
-            <a href="#portfolio">Портфолио</a>
-            <a href="#faq">FAQ</a>
-            <a href="#form" class="nav-cta">Связаться</a>
-        </nav>
+    <a href="/#about">Обо мне</a>
+    <a href="/#services">Услуги</a>
+    <a href="/#portfolio">Портфолио</a>
+    <a href="/#faq">FAQ</a>
+    <a href="/#form" class="nav-cta">Связаться</a>
+</nav>
         <button class="burger" id="burger" aria-label="Меню">
             <span></span><span></span><span></span>
         </button>
@@ -18,11 +21,11 @@
 </header>
 
 <div class="mobile-menu" id="mobileMenu">
-    <a href="#about">Обо мне</a>
-    <a href="#services">Услуги</a>
-    <a href="#portfolio">Портфолио</a>
-    <a href="#faq">FAQ</a>
-    <a href="#form" class="nav-cta">Связаться</a>
+    <a href="/#about">Обо мне</a>
+    <a href="/#services">Услуги</a>
+    <a href="/#portfolio">Портфолио</a>
+    <a href="/#faq">FAQ</a>
+    <a href="/#form" class="nav-cta">Связаться</a>
 </div>
 
 <style>
@@ -30,7 +33,7 @@
         position: fixed;
         top: 0; left: 0; right: 0;
         z-index: 100;
-        padding: 16px 0;
+        /* padding: 16px 0; */
         transition: all 0.4s;
         background: rgba(10,14,20,0.6);
         backdrop-filter: blur(20px) saturate(180%);
@@ -38,7 +41,7 @@
         border-bottom: 1px solid rgba(255,255,255,0.05);
     }
     .header.scrolled {
-        padding: 10px 0;
+        /* padding: 10px 0; */
         background: rgba(10,14,20,0.85);
         border-bottom-color: rgba(59,130,246,0.2);
     }
@@ -61,16 +64,11 @@
         font-weight: 500;
     }
     .logo-mark {
-        width: 36px; height: 36px;
-        background: linear-gradient(135deg, #3b82f6, #8b5cf6);
-        border-radius: 10px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: 800;
-        font-size: 16px;
-        color: #fff;
-    }
+    width: 72px;
+    height: 72px;
+    display: block;
+    object-fit: contain;
+}
     .logo-text b { color: #3b82f6; font-weight: 700; }
     .nav { display: flex; gap: 32px; align-items: center; }
     .nav a {
