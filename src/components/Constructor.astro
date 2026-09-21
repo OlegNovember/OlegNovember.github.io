@@ -1,16 +1,19 @@
 ---
 const blocks = [
-    { id: 'hero', label: 'Hero', always: true },
-    { id: 'about', label: 'О себе', always: true },
+    { id: 'hero', label: 'Hero' },
+    { id: 'about', label: 'О себе' },
     { id: 'services', label: 'Услуги' },
     { id: 'portfolio', label: 'Портфолио' },
     { id: 'reviews', label: 'Отзывы' },
     { id: 'pricing', label: 'Тарифы' },
     { id: 'gallery', label: 'Галерея' },
     { id: 'faq', label: 'FAQ' },
-    { id: 'form', label: 'Форма заявки', always: true },
+    { id: 'form', label: 'Форма заявки' },
     { id: 'contacts', label: 'Контакты' }
 ];
+
+// Стандартные блоки — включены по умолчанию, но снимаются
+const defaultChecked = ['hero', 'about', 'form'];
 
 const themes = [
     { id: 'dark', label: 'Тёмная', color: '#0f1420', card: '#1a2332', accent: '#3b82f6', text: '#e6edf3', muted: '#8a9aa8' },
@@ -25,37 +28,43 @@ const themes = [
     <div class="container">
         <div class="section-label reveal">Конструктор</div>
         <h2 class="section-title reveal d-1">Собери свой <em>лендинг</em></h2>
-        <p class="section-sub reveal d-2">Отметь блоки, выбери стиль — увидишь макет и цену в реальном времени</p>
+        <p class="section-sub reveal d-2">
+            <b>Лендинг под ключ — 9 000 ₽.</b> Количество блоков не влияет на цену.
+            Отметь блоки, выбери стиль и увидишь макет в реальном времени.
+        </p>
+
+        <a href="/guide" target="_blank" class="btn btn-blue guide-btn reveal d-2">
+            <span>Не знаешь, что выбрать? Гид по блокам</span>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </a>
 
         <div class="constructor reveal d-3">
             <!-- ПАНЕЛЬ НАСТРОЕК -->
             <div class="controls">
                 <div class="control-group">
                     <div class="control-title">
-                      <span>Блоки</span>
-                      <a href="/guide" class="guide-link" target="_blank">
-                       Не знаешь, что выбрать? Гид по блокам →
-                     </a>
+                        <span>Блоки</span>
                     </div>
                     <div class="blocks-grid">
                         {blocks.map(b => (
-                            <label class={`block-toggle ${b.always ? 'always' : ''}`}>
+                            <label class="block-toggle">
                                 <input 
                                     type="checkbox" 
                                     data-block={b.id} 
-                                    checked={b.always} 
-                                    disabled={b.always} 
+                                    checked={defaultChecked.includes(b.id)} 
                                 />
                                 <span class="block-check"></span>
                                 <span class="block-label">{b.label}</span>
-                                {b.always && <span class="block-tag">включён</span>}
+                                {defaultChecked.includes(b.id) && <span class="block-tag">Стандарт</span>}
                             </label>
                         ))}
                     </div>
                 </div>
 
                 <div class="control-group">
-                    <div class="control-title"><span>Цветовая схема</span></div>
+                    <div class="control-title"><span>Цветовая схема <span class="control-hint-inline">(несколько примеров)</span></span></div>
                     <div class="themes-grid">
                         {themes.map((t, i) => (
                             <button 
@@ -76,18 +85,6 @@ const themes = [
                         ))}
                     </div>
                 </div>
-
-                <div class="control-group">
-                    <div class="control-title"><span>Дополнительно</span></div>
-                    <label class="extra-toggle">
-                        <input type="checkbox" id="extraHosting" />
-                        <span class="block-check"></span>
-                        <span class="extra-content">
-                            <span class="extra-title">Домен + хостинг + SSL на год</span>
-                            <span class="extra-price">+1 000 ₽</span>
-                        </span>
-                    </label>
-                </div>
             </div>
 
             <!-- ПРЕВЬЮ -->
@@ -104,7 +101,6 @@ const themes = [
                     <span class="preview-info-item">⚡ Быстрый</span>
                     <span class="preview-info-item">🎨 Твой стиль</span>
                 </div>
-                <div class="preview-hint">↓ Прокрути превью, чтобы увидеть все блоки</div>
             </div>
         </div>
 
@@ -116,17 +112,14 @@ const themes = [
             </div>
         </div>
 
-        <!-- ИТОГ -->
-        <div class="totals reveal d-4">
-            <div class="totals-left">
-                <div class="total-label">Итоговая стоимость</div>
-                <div class="total-price"><span id="totalPrice">5 000</span> ₽</div>
-                <div class="total-note" id="totalNote">Базовая комплектация</div>
-            </div>
-            <a href="#form" class="btn btn-primary" id="orderBtn">
-                <span>Заказать такой лендинг</span>
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </a>
+        <!-- КНОПКА ЗАКАЗА -->
+        <div class="constructor-cta reveal d-4">
+            <button type="button" class="btn btn-primary btn-order" id="orderBtn">
+                <span>Заказать лендинг за 9 000 ₽</span>
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
         </div>
     </div>
 </section>
@@ -141,6 +134,26 @@ const themes = [
         background: radial-gradient(circle, rgba(139,92,246,0.08), transparent 70%);
         pointer-events: none;
     }
+    .constructor-section .section-sub {
+    margin-bottom: 25px;
+}
+    .constructor-section .section-sub b {
+        color: #fff;
+        font-weight: 700;
+    }
+
+    /* Кнопка «Гид по блокам» */
+    .guide-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 40px;
+        padding: 14px 28px;
+        font-size: 14px;
+    }
+    .guide-btn svg { transition: transform 0.3s; }
+    .guide-btn:hover svg { transform: translateX(4px); }
+
     .constructor {
         display: grid;
         grid-template-columns: 1fr 1.1fr;
@@ -161,7 +174,15 @@ const themes = [
         font-size: 13px; font-weight: 700;
         text-transform: uppercase; letter-spacing: 2px; color: #fff;
     }
-    .control-hint { font-size: 12px; color: #6a7a8a; font-weight: 400; text-transform: none; letter-spacing: 0; }
+    .control-hint {
+        font-size: 12px; color: #6a7a8a;
+        font-weight: 400; text-transform: none; letter-spacing: 0;
+    }
+    .control-hint-inline {
+    font-size: 12px;
+    color: #6a7a8a;
+    font-weight: 400;
+}
     .blocks-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
     .block-toggle {
         display: flex; align-items: center; gap: 10px;
@@ -175,32 +196,39 @@ const themes = [
     }
     .block-toggle:hover { border-color: rgba(59,130,246,0.4); background: rgba(59,130,246,0.05); }
     .block-toggle input { position: absolute; opacity: 0; pointer-events: none; }
-    .block-toggle:has(input:checked) { border-color: rgba(59,130,246,0.6); background: rgba(59,130,246,0.1); color: #fff; }
-    .block-toggle.always { opacity: 0.7; cursor: not-allowed; }
-    .block-toggle.always:has(input:checked) { opacity: 1; }
+    .block-toggle:has(input:checked) {
+        border-color: rgba(59,130,246,0.6);
+        background: rgba(59,130,246,0.1);
+        color: #fff;
+    }
     .block-check {
         width: 18px; height: 18px;
         border: 2px solid rgba(255,255,255,0.2);
         border-radius: 5px; flex-shrink: 0;
         position: relative; transition: all 0.25s;
     }
-    .block-toggle:has(input:checked) .block-check,
-    .extra-toggle:has(input:checked) .block-check {
+    .block-toggle:has(input:checked) .block-check {
         background: linear-gradient(135deg, #3b82f6, #8b5cf6);
         border-color: transparent;
     }
-    .block-toggle:has(input:checked) .block-check::after,
-    .extra-toggle:has(input:checked) .block-check::after {
-        content: ""; position: absolute; left: 5px; top: 1px;
+    .block-toggle:has(input:checked) .block-check::after {
+        content: "";
+        position: absolute;
+        left: 5px; top: 1px;
         width: 5px; height: 10px;
-        border: solid #fff; border-width: 0 2px 2px 0;
+        border: solid #fff;
+        border-width: 0 2px 2px 0;
         transform: rotate(45deg);
     }
     .block-tag {
-        font-size: 10px; padding: 2px 6px;
-        background: rgba(34,197,94,0.15); color: #22c55e;
-        border-radius: 4px; text-transform: uppercase;
-        letter-spacing: 0.5px; margin-left: auto;
+        font-size: 10px; padding: 2px 8px;
+        background: rgba(59,130,246,0.15);
+        color: #60a5fa;
+        border-radius: 4px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        font-weight: 700;
+        margin-left: auto;
     }
 
     .themes-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
@@ -223,22 +251,6 @@ const themes = [
     .theme-dot { width: 14px; height: 14px; border-radius: 50%; }
     .theme-label { font-size: 11px; color: #8a9aa8; font-weight: 500; }
     .theme-btn.active .theme-label { color: #fff; }
-
-    .extra-toggle {
-        display: flex; align-items: center; gap: 12px;
-        padding: 14px 16px;
-        background: rgba(255,255,255,0.03);
-        border: 1px solid rgba(255,255,255,0.08);
-        border-radius: 12px;
-        cursor: pointer; transition: all 0.25s; user-select: none;
-    }
-    .extra-toggle:hover { border-color: rgba(59,130,246,0.4); background: rgba(59,130,246,0.05); }
-    .extra-toggle:has(input:checked) { border-color: rgba(59,130,246,0.6); background: rgba(59,130,246,0.1); }
-    .extra-toggle input { position: absolute; opacity: 0; pointer-events: none; }
-    .extra-content { display: flex; align-items: center; justify-content: space-between; flex: 1; }
-    .extra-title { color: #c8d4e0; font-size: 14px; font-weight: 500; }
-    .extra-toggle:has(input:checked) .extra-title { color: #fff; }
-    .extra-price { font-size: 13px; color: #3b82f6; font-weight: 700; }
 
     /* ПРЕВЬЮ */
     .preview {
@@ -272,15 +284,29 @@ const themes = [
     .preview-body::-webkit-scrollbar { width: 4px; }
     .preview-body::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 2px; }
 
+    .preview-empty {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 40px 32px;
+        text-align: center;
+        color: #6a7a8a;
+    }
+    .preview-empty-icon {
+        font-size: 48px;
+        margin-bottom: 20px;
+        opacity: 0.4;
+    }
+    .preview-empty-text {
+        font-size: 15px;
+        line-height: 1.6;
+        max-width: 280px;
+    }
+
     .preview-info { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
     .preview-info-item { font-size: 12px; color: #6a7a8a; }
-    .preview-hint {
-        text-align: center;
-        font-size: 11px;
-        color: #4a5a6a;
-        letter-spacing: 1px;
-        margin-top: 4px;
-    }
 
     /* ПРИМЕЧАНИЕ */
     .constructor-note {
@@ -320,70 +346,50 @@ const themes = [
         font-weight: 700;
     }
 
-    /* ИТОГ */
-    .totals {
-        margin-top: 32px;
-        display: flex; align-items: center; justify-content: space-between;
-        gap: 32px; padding: 32px 40px;
-        background: linear-gradient(135deg, rgba(59,130,246,0.08), rgba(139,92,246,0.08));
-        border: 1px solid rgba(59,130,246,0.25);
-        border-radius: 24px; flex-wrap: wrap;
+    /* КНОПКА ЗАКАЗА */
+    .constructor-cta {
+        margin-top: 40px;
+        display: flex;
+        justify-content: center;
     }
-    .totals-left { display: flex; flex-direction: column; gap: 6px; }
-    .total-label { font-size: 12px; color: #8a9aa8; text-transform: uppercase; letter-spacing: 2px; }
-    .total-price { font-size: 44px; font-weight: 900; color: #fff; line-height: 1; letter-spacing: -2px; }
-    .total-price span {
-        background: linear-gradient(135deg, #3b82f6, #8b5cf6);
-        -webkit-background-clip: text; background-clip: text;
-        -webkit-text-fill-color: transparent;
+    .btn-order {
+        padding: 20px 48px;
+        font-size: 17px;
     }
-    .total-note { font-size: 13px; color: #6a7a8a; }
-
-    .guide-link {
-    font-size: 12px;
-    color: #3b82f6;
-    text-decoration: none;
-    font-weight: 500;
-    transition: color 0.2s;
-    text-align: right;
-}
-.guide-link:hover { color: #8b5cf6; }
 
     @media (max-width: 1024px) {
         .constructor { grid-template-columns: 1fr; gap: 40px; }
         .preview { position: static; }
         .preview-body { height: 480px; }
+        .guide-btn { margin-bottom: 32px; }
     }
     @media (max-width: 640px) {
         .blocks-grid { grid-template-columns: 1fr; }
         .themes-grid { grid-template-columns: repeat(3, 1fr); }
-        .totals { padding: 24px 20px; }
-        .total-price { font-size: 32px; }
         .constructor-note { padding: 20px 18px; gap: 14px; }
+        .btn-order {
+            padding: 16px 24px;
+            font-size: 15px;
+            width: 100%;
+        }
     }
 </style>
 
 <script>
-    const BASE_PRICE = 5000;
-    const HOSTING_PRICE = 1000;
-
     const blocksData = [
-        { id: 'hero', label: 'Hero', always: true },
-        { id: 'about', label: 'О себе', always: true },
+        { id: 'hero', label: 'Hero' },
+        { id: 'about', label: 'О себе' },
         { id: 'services', label: 'Услуги' },
         { id: 'portfolio', label: 'Портфолио' },
         { id: 'reviews', label: 'Отзывы' },
         { id: 'pricing', label: 'Тарифы' },
         { id: 'gallery', label: 'Галерея' },
         { id: 'faq', label: 'FAQ' },
-        { id: 'form', label: 'Форма заявки', always: true },
+        { id: 'form', label: 'Форма заявки' },
         { id: 'contacts', label: 'Контакты' }
     ];
 
     const previewBody = document.getElementById('previewBody');
-    const totalPriceEl = document.getElementById('totalPrice');
-    const totalNoteEl = document.getElementById('totalNote');
-    const hostingCheckbox = document.getElementById('extraHosting') as HTMLInputElement;
 
     let T = {
         color: '#0f1420',
@@ -393,7 +399,7 @@ const themes = [
         muted: '#8a9aa8'
     };
 
-    // ============ БЛОКИ ПРЕВЬЮ ============
+    // ============ РЕНДЕР БЛОКОВ ПРЕВЬЮ ============
     const blockRenderers: Record<string, () => string> = {
         hero: () => `
             <div style="padding:32px 22px;background:linear-gradient(135deg,${T.color},${T.card});text-align:center;border-bottom:1px solid ${T.accent}20">
@@ -498,12 +504,31 @@ const themes = [
         `
     };
 
+    // ============ ПУСТОЕ ПРЕВЬЮ ============
+    function renderEmpty() {
+        if (!previewBody) return;
+        previewBody.style.background = T.color;
+        previewBody.innerHTML = `
+            <div class="preview-empty">
+                <div class="preview-empty-icon">📦</div>
+                <div class="preview-empty-text">Выбери хотя бы один блок, чтобы увидеть макет</div>
+            </div>
+        `;
+    }
+
+    // ============ РЕНДЕР ПРЕВЬЮ ============
     function renderPreview() {
         const checked = Array.from(document.querySelectorAll<HTMLInputElement>('[data-block]'))
             .filter(cb => cb.checked)
             .map(cb => cb.dataset.block);
 
         if (!previewBody) return;
+
+        if (checked.length === 0) {
+            renderEmpty();
+            return;
+        }
+
         previewBody.innerHTML = '';
         previewBody.style.background = T.color;
 
@@ -516,7 +541,6 @@ const themes = [
             }
         });
 
-        // стили для анимации вставляем один раз
         if (!document.getElementById('previewAnimStyles')) {
             const style = document.createElement('style');
             style.id = 'previewAnimStyles';
@@ -525,23 +549,11 @@ const themes = [
         }
     }
 
-    function updatePrice() {
-        let total = BASE_PRICE;
-        const notes = ['Базовая комплектация'];
-        if (hostingCheckbox?.checked) {
-            total += HOSTING_PRICE;
-            notes.push('+ домен, хостинг, SSL');
-        }
-        if (totalPriceEl) totalPriceEl.textContent = total.toLocaleString('ru-RU');
-        if (totalNoteEl) totalNoteEl.textContent = notes.join(' · ');
-    }
-
-    // Блоки
+    // ============ ОБРАБОТЧИКИ ============
     document.querySelectorAll<HTMLInputElement>('[data-block]').forEach(cb => {
         cb.addEventListener('change', renderPreview);
     });
 
-    // Темы
     document.querySelectorAll<HTMLButtonElement>('.theme-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
@@ -557,12 +569,9 @@ const themes = [
         });
     });
 
-    hostingCheckbox?.addEventListener('change', updatePrice);
-
     renderPreview();
-    updatePrice();
 
-    // Передача данных в форму
+    // ============ ПЕРЕДАЧА В ФОРМУ ============
     const orderBtn = document.getElementById('orderBtn');
     orderBtn?.addEventListener('click', () => {
         const checked = Array.from(document.querySelectorAll<HTMLInputElement>('[data-block]'))
@@ -571,17 +580,21 @@ const themes = [
             .filter(Boolean);
 
         const theme = document.querySelector('.theme-btn.active .theme-label')?.textContent || 'Тёмная';
-        const hosting = hostingCheckbox?.checked ? 'да' : 'нет';
-        const total = totalPriceEl?.textContent || '5 000';
 
         const messageField = document.getElementById('message') as HTMLTextAreaElement | null;
         if (messageField) {
-            messageField.value = `Конструктор:\nБлоки: ${checked.join(', ')}\nТема: ${theme}\nДомен+хостинг: ${hosting}\nЦена: ${total} ₽`;
+            const blocksLine = checked.length > 0 
+                ? `Блоки: ${checked.join(', ')}`
+                : 'Блоки: не выбраны (обсудим в диалоге)';
+            messageField.value = `Конструктор:\n${blocksLine}\nТема: ${theme}\nЦена: 9 000 ₽`;
         }
 
         const serviceSelect = document.getElementById('service') as HTMLSelectElement | null;
         if (serviceSelect) {
             serviceSelect.value = 'Лендинг — 9 000 ₽';
         }
+
+        // Прокрутка к форме
+        document.getElementById('form')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
 </script>
