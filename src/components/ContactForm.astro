@@ -186,102 +186,71 @@
 </style>
 
 <script>
-    // ⚠️ ЗАМЕНИ НА СВОИ ЗНАЧЕНИЯ
-    const TELEGRAM_BOT_TOKEN = '8605046991:AAEEqaG2eSSGHLpSlwZE1H6XhI9iMwtjsFw';
-    const TELEGRAM_CHAT_ID = '5556097318';
+   const WORKER_URL = 'https://olegdc-proxy.hutzini.workers.dev';
 
-    const form = document.getElementById('contactForm') as HTMLFormElement | null;
+const form = document.getElementById('contactForm') as HTMLFormElement | null;
 
-    if (form) {
-        // Статус-блок
-        const status = document.createElement('div');
+if (form) {
+    const status = document.createElement('div');
+    status.className = 'form-status';
+    form.appendChild(status);
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const btn = form.querySelector('button[type="submit"]') as HTMLButtonElement;
+        const originalText = btn.innerHTML;
+
+        const formData = new FormData(form);
+        const name = formData.get('name')?.toString().trim() || '';
+        const contact = formData.get('contact')?.toString().trim() || '';
+        const service = formData.get('service')?.toString().trim() || '';
+        const message = formData.get('message')?.toString().trim() || '';
+        const consent = formData.get('consent');
+
+        if (!name || !contact) {
+            status.className = 'form-status error';
+            status.textContent = 'Заполни имя и контакт';
+            return;
+        }
+
+        if (!consent) {
+            status.className = 'form-status error';
+            status.textContent = 'Нужно согласие на обработку данных';
+            return;
+        }
+
+        btn.disabled = true;
+        btn.innerHTML = 'Отправка...';
         status.className = 'form-status';
-        form.appendChild(status);
 
-        form.addEventListener('submit', async (e) => {
-            e.preventDefault();
+        try {
+            const response = await fetch(WORKER_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, contact, service, message })
+            });
 
-            const btn = form.querySelector('button[type="submit"]') as HTMLButtonElement;
-            const originalText = btn.innerHTML;
+            const data = await response.json();
 
-            // Собираем данные
-            const formData = new FormData(form);
-            const name = formData.get('name')?.toString().trim() || '—';
-            const contact = formData.get('contact')?.toString().trim() || '—';
-            const service = formData.get('service')?.toString().trim() || '—';
-            const message = formData.get('message')?.toString().trim() || '—';
-
-            // Валидация
-            if (!name || !contact) {
-                status.className = 'form-status error';
-                status.textContent = 'Заполни имя и контакт';
-                return;
+            if (data.ok) {
+                status.className = 'form-status success';
+                status.textContent = '✓ Заявка отправлена! Отвечу в течение часа.';
+                form.reset();
+            } else {
+                throw new Error(data.error || 'Ошибка отправки');
             }
-
-            const consent = formData.get('consent');
-            if (!consent) {
-                status.className = 'form-status error';
-                status.textContent = 'Нужно согласие на обработку данных';
-                return;
-            }
-
-            // Блокировка кнопки
-            btn.disabled = true;
-            btn.innerHTML = 'Отправка...';
-            status.className = 'form-status';
-
-            // Формируем сообщение для Telegram (HTML-разметка)
-            const escapeHtml = (s: string) =>
-                s.replace(/&/g, '&amp;')
-                 .replace(/</g, '&lt;')
-                 .replace(/>/g, '&gt;');
-
-            const text = [
-                '🔔 <b>Новая заявка с сайта</b>',
-                '',
-                `<b>Имя:</b> ${escapeHtml(name)}`,
-                `<b>Контакт:</b> ${escapeHtml(contact)}`,
-                `<b>Услуга:</b> ${escapeHtml(service)}`,
-                `<b>Комментарий:</b> ${escapeHtml(message)}`,
-                '',
-                `🕐 ${new Date().toLocaleString('ru-RU')}`
-            ].join('\n');
-
-            try {
-                const response = await fetch(
-                    `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`,
-                    {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            chat_id: TELEGRAM_CHAT_ID,
-                            text: text,
-                            parse_mode: 'HTML',
-                            disable_web_page_preview: true
-                        })
-                    }
-                );
-
-                const data = await response.json();
-
-                if (data.ok) {
-                    status.className = 'form-status success';
-                    status.textContent = '✓ Заявка отправлена! Отвечу в течение часа.';
-                    form.reset();
-                } else {
-                    throw new Error(data.description || 'Ошибка отправки');
-                }
-            } catch (err) {
-                console.error(err);
-                status.className = 'form-status error';
-                status.textContent = 'Ошибка отправки. Напиши напрямую в Telegram.';
-            } finally {
-                btn.innerHTML = originalText;
-                btn.disabled = false;
-                setTimeout(() => {
-                    status.className = 'form-status';
-                }, 8000);
-            }
-        });
-    }
+        } catch (err) {
+            console.error(err);
+            status.className = 'form-status error';
+            status.textContent = 'Ошибка отправки. Напиши напрямую в Telegram.';
+        } finally {
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+            setTimeout(() => {
+                status.className = 'form-status';
+            }, 8000);
+        }
+    });
+}
 </script>
