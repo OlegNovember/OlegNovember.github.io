@@ -1,8 +1,26 @@
 ---
 const items = [
-    { text: 'Олег сделал лендинг за 2 дня. Я даже не успел подумать, что нужно что-то ещё. Всё чётко, без воды. Заявки пошли в первый же день.', name: 'Анна К.', role: 'Психолог · Москва', avatar: 'А' },
-    { text: 'Заказывал лендинг для команды. Получил не просто страницу, а инструмент. Ребята скидывают ссылку — люди сами пишут. Раньше объясняли вручную.', name: 'Дмитрий С.', role: 'Лидер команды · СПб', avatar: 'Д' },
-    { text: 'Работали над лендингом для курса. Олег предложил структуру, которой у меня не было. Конверсия выросла в 2 раза. Рекомендую.', name: 'Елена М.', role: 'Онлайн-школа · Казань', avatar: 'Е' }
+    { 
+        text: 'Олег сделал лендинг за 2 дня. Я даже не успела подумать, что нужно что-то ещё. Всё чётко, без воды. Заявки пошли в первый же день.', 
+        name: 'Анна К.', 
+        role: 'Психолог · Москва', 
+        avatar: 'А',
+        image: '/images/testimonials/anna.jpg'
+    },
+    { 
+        text: 'Заказывал лендинг для команды. Получил не просто страницу, а инструмент. Ребята скидывают ссылку — люди сами пишут. Раньше объясняли вручную.', 
+        name: 'Дмитрий С.', 
+        role: 'Лидер команды · СПб', 
+        avatar: 'Д',
+        image: '/images/testimonials/dmitry.jpg'
+    },
+    { 
+        text: 'Работали над лендингом для курса. Олег предложил структуру, которой у меня не было. Конверсия выросла в 2 раза. Рекомендую.', 
+        name: 'Елена М.', 
+        role: 'Онлайн-школа · Казань', 
+        avatar: 'Е',
+        image: '/images/testimonials/elena.jpg'
+    }
 ];
 ---
 
@@ -15,10 +33,11 @@ const items = [
         <div class="testimonials-grid">
             {items.map((t, i) => (
                 <div class={`testimonial reveal d-${i + 1}`}>
-                    <div class="testimonial-quote">"</div>
                     <p class="testimonial-text">{t.text}</p>
                     <div class="testimonial-author">
-                        <div class="testimonial-avatar">{t.avatar}</div>
+                        <div class="testimonial-avatar">
+                            <img src={t.image} alt={t.name} loading="lazy" onerror="this.style.display='none'; this.parentElement.textContent = '${t.avatar}'" />
+                        </div>
                         <div>
                             <div class="testimonial-name">{t.name}</div>
                             <div class="testimonial-role">{t.role}</div>
@@ -41,39 +60,31 @@ const items = [
         background: rgba(255,255,255,0.03);
         border: 1px solid rgba(255,255,255,0.08);
         border-radius: 20px;
-        padding: 36px 32px;
+        padding: 32px 32px 28px;
         transition: all 0.4s;
+        display: flex;
+        flex-direction: column;
+        gap: 28px;
     }
     .testimonial:hover {
         border-color: rgba(59,130,246,0.4);
         transform: translateY(-6px);
     }
-    .testimonial-quote {
-        font-size: 60px;
-        line-height: 0.5;
-        font-weight: 900;
-        background: linear-gradient(135deg, #3b82f6, #8b5cf6);
-        -webkit-background-clip: text;
-        background-clip: text;
-        -webkit-text-fill-color: transparent;
-        margin-bottom: 20px;
-        font-family: Georgia, serif;
-    }
     .testimonial-text {
         color: #c8d4e0;
         font-size: 15px;
         line-height: 1.8;
-        margin-bottom: 28px;
+        flex-grow: 1;
     }
     .testimonial-author {
         display: flex;
         align-items: center;
-        gap: 14px;
+        gap: 18px;
         padding-top: 24px;
         border-top: 1px solid rgba(255,255,255,0.08);
     }
     .testimonial-avatar {
-        width: 44px; height: 44px;
+        width: 80px; height: 80px;
         background: linear-gradient(135deg, #3b82f6, #8b5cf6);
         border-radius: 50%;
         display: flex;
@@ -81,13 +92,24 @@ const items = [
         justify-content: center;
         font-weight: 800;
         color: #fff;
-        font-size: 16px;
+        font-size: 26px;
         flex-shrink: 0;
+        overflow: hidden;
+        position: relative;
+    }
+    .testimonial-avatar img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
     }
     .testimonial-name {
         font-weight: 700;
-        font-size: 15px;
+        font-size: 17px;
         color: #fff;
+        margin-bottom: 4px;
     }
     .testimonial-role {
         font-size: 13px;
@@ -95,5 +117,13 @@ const items = [
     }
     @media (max-width: 1024px) {
         .testimonials-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px) {
+        .testimonial-avatar {
+            width: 64px;
+            height: 64px;
+            font-size: 22px;
+        }
+        .testimonial-author { gap: 14px; }
     }
 </style>

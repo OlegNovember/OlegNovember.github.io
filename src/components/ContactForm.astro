@@ -1,3 +1,6 @@
+---
+---
+
 <section id="form" class="section section-dark">
     <div class="container">
         <div class="form-wrap reveal-scale">
@@ -12,7 +15,7 @@
                     <li>Без обязательств</li>
                 </ul>
             </div>
-            <form action="https://formspree.io/f/your_form_id" method="POST" class="form">
+            <form class="form" id="contactForm" novalidate>
                 <div class="form-group">
                     <label for="name">Имя</label>
                     <input type="text" id="name" name="name" placeholder="Как к тебе обращаться?" required />
@@ -44,7 +47,9 @@
                 </div>
                 <button type="submit" class="btn btn-primary btn-full">
                     <span>Отправить заявку</span>
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
                 </button>
             </form>
         </div>
@@ -150,6 +155,28 @@
         cursor: pointer;
     }
     .checkbox-group a { color: #3b82f6; }
+
+    .form-status {
+        margin-top: 16px;
+        padding: 14px 18px;
+        border-radius: 12px;
+        font-size: 14px;
+        text-align: center;
+        display: none;
+    }
+    .form-status.success {
+        display: block;
+        background: rgba(34,197,94,0.1);
+        border: 1px solid rgba(34,197,94,0.3);
+        color: #22c55e;
+    }
+    .form-status.error {
+        display: block;
+        background: rgba(239,68,68,0.1);
+        border: 1px solid rgba(239,68,68,0.3);
+        color: #ef4444;
+    }
+
     @media (max-width: 1024px) {
         .form-wrap { grid-template-columns: 1fr; gap: 40px; padding: 40px 28px; }
     }
@@ -159,42 +186,101 @@
 </style>
 
 <script>
-    const form = document.querySelector('.form') as HTMLFormElement | null;
+    // ⚠️ ЗАМЕНИ НА СВОИ ЗНАЧЕНИЯ
+    const TELEGRAM_BOT_TOKEN = '8605046991:AAEEqaG2eSSGHLpSlwZE1H6XhI9iMwtjsFw';
+    const TELEGRAM_CHAT_ID = '5556097318';
+
+    const form = document.getElementById('contactForm') as HTMLFormElement | null;
+
     if (form) {
+        // Статус-блок
+        const status = document.createElement('div');
+        status.className = 'form-status';
+        form.appendChild(status);
+
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
+
             const btn = form.querySelector('button[type="submit"]') as HTMLButtonElement;
             const originalText = btn.innerHTML;
-            btn.innerHTML = 'Отправка...';
+
+            // Собираем данные
+            const formData = new FormData(form);
+            const name = formData.get('name')?.toString().trim() || '—';
+            const contact = formData.get('contact')?.toString().trim() || '—';
+            const service = formData.get('service')?.toString().trim() || '—';
+            const message = formData.get('message')?.toString().trim() || '—';
+
+            // Валидация
+            if (!name || !contact) {
+                status.className = 'form-status error';
+                status.textContent = 'Заполни имя и контакт';
+                return;
+            }
+
+            const consent = formData.get('consent');
+            if (!consent) {
+                status.className = 'form-status error';
+                status.textContent = 'Нужно согласие на обработку данных';
+                return;
+            }
+
+            // Блокировка кнопки
             btn.disabled = true;
+            btn.innerHTML = 'Отправка...';
+            status.className = 'form-status';
+
+            // Формируем сообщение для Telegram (HTML-разметка)
+            const escapeHtml = (s: string) =>
+                s.replace(/&/g, '&amp;')
+                 .replace(/</g, '&lt;')
+                 .replace(/>/g, '&gt;');
+
+            const text = [
+                '🔔 <b>Новая заявка с сайта</b>',
+                '',
+                `<b>Имя:</b> ${escapeHtml(name)}`,
+                `<b>Контакт:</b> ${escapeHtml(contact)}`,
+                `<b>Услуга:</b> ${escapeHtml(service)}`,
+                `<b>Комментарий:</b> ${escapeHtml(message)}`,
+                '',
+                `🕐 ${new Date().toLocaleString('ru-RU')}`
+            ].join('\n');
 
             try {
-                const formData = new FormData(form);
-                const response = await fetch(form.action, {
-                    method: 'POST',
-                    body: formData,
-                    headers: { 'Accept': 'application/json' }
-                });
-                if (response.ok) {
-                    btn.innerHTML = '✓ Отправлено!';
-                    btn.style.background = 'linear-gradient(135deg, #22c55e, #16a34a)';
+                const response = await fetch(
+                    `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`,
+                    {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            chat_id: TELEGRAM_CHAT_ID,
+                            text: text,
+                            parse_mode: 'HTML',
+                            disable_web_page_preview: true
+                        })
+                    }
+                );
+
+                const data = await response.json();
+
+                if (data.ok) {
+                    status.className = 'form-status success';
+                    status.textContent = '✓ Заявка отправлена! Отвечу в течение часа.';
                     form.reset();
-                    setTimeout(() => {
-                        btn.innerHTML = originalText;
-                        btn.style.background = '';
-                        btn.disabled = false;
-                    }, 3000);
                 } else {
-                    throw new Error('Error');
+                    throw new Error(data.description || 'Ошибка отправки');
                 }
             } catch (err) {
-                btn.innerHTML = 'Ошибка. Попробуй ещё раз';
-                btn.style.background = 'linear-gradient(135deg, #ef4444, #dc2626)';
+                console.error(err);
+                status.className = 'form-status error';
+                status.textContent = 'Ошибка отправки. Напиши напрямую в Telegram.';
+            } finally {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
                 setTimeout(() => {
-                    btn.innerHTML = originalText;
-                    btn.style.background = '';
-                    btn.disabled = false;
-                }, 3000);
+                    status.className = 'form-status';
+                }, 8000);
             }
         });
     }

@@ -1,11 +1,47 @@
 ---
 const items = [
-    { url: '/demo/male.html', cat: 'Мужской · Тёмный', title: 'Лендинг для наставника', desc: 'Tilda-анимации, форма заявки, FAQ' },
-    { url: '/demo/female.html', cat: 'Женский · Пастель', title: 'Лендинг для наставницы', desc: 'Мягкие формы, женский круг, отзывы' },
-    { url: '/demo/luxury.html', cat: 'Люкс · Чёрный + золото', title: 'Приватная практика', desc: 'Monogram, ограниченный поток, конфиденциальность' },
-    { url: '/demo/quiz.html', cat: 'Интерактив · Квиз', title: 'Лендинг-квиз', desc: '3 вопроса, результат, форма заявки' },
-    { url: null, cat: 'Скоро', title: 'Лендинг для эксперта', desc: 'В разработке', placeholder: 'Эксперт' },
-    { url: null, cat: 'Скоро', title: 'Лендинг для курса', desc: 'В разработке', placeholder: 'Курс' }
+    { 
+        url: '/demo/male.html', 
+        cat: 'Мужской · Тёмный', 
+        title: 'Лендинг для наставника', 
+        desc: 'Tilda-анимации, форма заявки, FAQ', 
+        image: '/images/portfolio/male.jpg' 
+    },
+    { 
+        url: '/demo/female.html', 
+        cat: 'Женский · Пастель', 
+        title: 'Лендинг для наставницы', 
+        desc: 'Мягкие формы, женский круг, отзывы', 
+        image: '/images/portfolio/female.jpg' 
+    },
+    { 
+        url: '/demo/luxury.html', 
+        cat: 'Люкс · Чёрный + золото', 
+        title: 'Приватная практика', 
+        desc: 'Monogram, ограниченный поток, конфиденциальность', 
+        image:'/images/portfolio/luxury.jpg' 
+    },
+    { 
+        url: '/demo/quiz.html', 
+        cat: 'Интерактив · Квиз', 
+        title: 'Лендинг-квиз', 
+        desc: '3 вопроса, результат, форма заявки', 
+        image: '/images/portfolio/quiz.jpg' 
+    },
+    { 
+        url: null, 
+        cat: 'Скоро', 
+        title: 'Лендинг для эксперта', 
+        desc: 'В разработке', 
+        placeholder: 'Эксперт' 
+    },
+    { 
+        url: null, 
+        cat: 'Скоро', 
+        title: 'Лендинг для курса', 
+        desc: 'В разработке', 
+        placeholder: 'Курс' 
+    }
 ];
 ---
 
@@ -19,9 +55,11 @@ const items = [
         {items.map(item => (
             <a href={item.url || '#'} class="portfolio-card" target={item.url ? '_blank' : undefined} rel="noopener">
                 <div class="portfolio-preview">
-                    {item.url
-                        ? <iframe src={item.url} loading="lazy" tabindex="-1"></iframe>
-                        : <div class="portfolio-placeholder">{item.placeholder}</div>
+                    {item.image 
+                        ? <img src={item.image} alt={item.title} loading="lazy" />
+                        : item.placeholder 
+                            ? <div class="portfolio-placeholder">{item.placeholder}</div>
+                            : <div class="portfolio-placeholder-soon">Скоро</div>
                     }
                 </div>
                 <div class="portfolio-info">
@@ -52,15 +90,15 @@ const items = [
     .portfolio-track {
         display: flex;
         gap: 32px;
-        padding: 0 32px;
+        padding: 0 32px 20px;
         overflow-x: auto;
         scroll-snap-type: x mandatory;
         -webkit-overflow-scrolling: touch;
-        padding-bottom: 20px;
     }
     .portfolio-track::-webkit-scrollbar { height: 6px; }
     .portfolio-track::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); border-radius: 3px; }
     .portfolio-track::-webkit-scrollbar-thumb { background: #3b82f6; border-radius: 3px; }
+
     .portfolio-card {
         flex-shrink: 0;
         width: 420px;
@@ -80,26 +118,34 @@ const items = [
         transform: translateY(-8px);
         box-shadow: 0 24px 60px rgba(59,130,246,0.2);
     }
+
     .portfolio-preview {
-        height: 260px;
+        aspect-ratio: 16 / 10;
+        width: 100%;
         background: linear-gradient(135deg, #0f1a2e, #1a2332);
         position: relative;
         overflow: hidden;
         border-bottom: 1px solid rgba(255,255,255,0.05);
+        display: block;
     }
-    .portfolio-preview iframe {
-        width: 1200px;
-        height: 800px;
-        border: none;
-        transform: scale(0.35);
-        transform-origin: 0 0;
-        pointer-events: none;
-        opacity: 0;
-        transition: opacity 0.5s;
+    .portfolio-preview img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: top center;
+        display: block;
+        transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
     }
-    .portfolio-card:hover .portfolio-preview iframe { opacity: 1; }
-    .portfolio-placeholder {
-        width: 100%; height: 100%;
+    .portfolio-card:hover .portfolio-preview img {
+        transform: scale(1.05);
+    }
+
+    .portfolio-placeholder,
+    .portfolio-placeholder-soon {
+        position: absolute;
+        inset: 0;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -109,6 +155,13 @@ const items = [
         color: #4a5a6a;
         letter-spacing: -2px;
     }
+    .portfolio-placeholder-soon {
+        font-size: 22px;
+        letter-spacing: 4px;
+        text-transform: uppercase;
+        color: #6a7a8a;
+    }
+
     .portfolio-info { padding: 24px 28px; }
     .portfolio-cat {
         font-size: 12px;
@@ -157,9 +210,8 @@ const items = [
     }
     @media (max-width: 1024px) {
         .portfolio-card { width: 320px; }
-        .portfolio-preview iframe { opacity: 1; }
         .portfolio-hint { display: none; }
         .portfolio-header { padding: 0 20px; }
-        .portfolio-track { padding: 0 20px; }
+        .portfolio-track { padding: 0 20px 20px; }
     }
 </style>
