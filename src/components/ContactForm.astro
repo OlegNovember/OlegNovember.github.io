@@ -186,71 +186,71 @@
 </style>
 
 <script>
-   const WORKER_URL = 'https://olegdc-proxy.hutzini.workers.dev';
+    const API_URL = 'https://functions.yandexcloud.net/d4enlbgkha20juau7mmg';
 
-const form = document.getElementById('contactForm') as HTMLFormElement | null;
+    const form = document.getElementById('contactForm') as HTMLFormElement | null;
 
-if (form) {
-    const status = document.createElement('div');
-    status.className = 'form-status';
-    form.appendChild(status);
-
-    form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-
-        const btn = form.querySelector('button[type="submit"]') as HTMLButtonElement;
-        const originalText = btn.innerHTML;
-
-        const formData = new FormData(form);
-        const name = formData.get('name')?.toString().trim() || '';
-        const contact = formData.get('contact')?.toString().trim() || '';
-        const service = formData.get('service')?.toString().trim() || '';
-        const message = formData.get('message')?.toString().trim() || '';
-        const consent = formData.get('consent');
-
-        if (!name || !contact) {
-            status.className = 'form-status error';
-            status.textContent = 'Заполни имя и контакт';
-            return;
-        }
-
-        if (!consent) {
-            status.className = 'form-status error';
-            status.textContent = 'Нужно согласие на обработку данных';
-            return;
-        }
-
-        btn.disabled = true;
-        btn.innerHTML = 'Отправка...';
+    if (form) {
+        const status = document.createElement('div');
         status.className = 'form-status';
+        form.appendChild(status);
 
-        try {
-            const response = await fetch(WORKER_URL, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name, contact, service, message })
-            });
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
 
-            const data = await response.json();
+            const btn = form.querySelector('button[type="submit"]') as HTMLButtonElement;
+            const originalText = btn.innerHTML;
 
-            if (data.ok) {
-                status.className = 'form-status success';
-                status.textContent = '✓ Заявка отправлена! Отвечу в течение часа.';
-                form.reset();
-            } else {
-                throw new Error(data.error || 'Ошибка отправки');
+            const formData = new FormData(form);
+            const name = formData.get('name')?.toString().trim() || '';
+            const contact = formData.get('contact')?.toString().trim() || '';
+            const service = formData.get('service')?.toString().trim() || '';
+            const message = formData.get('message')?.toString().trim() || '';
+            const consent = formData.get('consent');
+
+            if (!name || !contact) {
+                status.className = 'form-status error';
+                status.textContent = 'Заполни имя и контакт';
+                return;
             }
-        } catch (err) {
-            console.error(err);
-            status.className = 'form-status error';
-            status.textContent = 'Ошибка отправки. Напиши напрямую в Telegram.';
-        } finally {
-            btn.innerHTML = originalText;
-            btn.disabled = false;
-            setTimeout(() => {
-                status.className = 'form-status';
-            }, 8000);
-        }
-    });
-}
+
+            if (!consent) {
+                status.className = 'form-status error';
+                status.textContent = 'Нужно согласие на обработку данных';
+                return;
+            }
+
+            btn.disabled = true;
+            btn.innerHTML = 'Отправка...';
+            status.className = 'form-status';
+
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, contact, service, message })
+                });
+
+                const data = await response.json();
+
+                if (data.ok) {
+                    status.className = 'form-status success';
+                    status.textContent = '✓ Заявка отправлена! Отвечу в течение часа.';
+                    form.reset();
+                } else {
+                    throw new Error(data.error || 'Ошибка отправки');
+                }
+            } catch (err) {
+                console.error(err);
+                status.className = 'form-status error';
+                status.textContent = 'Ошибка отправки. Напиши напрямую в Telegram.';
+            } finally {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+                setTimeout(() => {
+                    status.className = 'form-status';
+                }, 8000);
+            }
+        });
+    }
 </script>
